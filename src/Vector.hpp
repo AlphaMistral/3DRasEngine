@@ -16,7 +16,7 @@ struct Vector4
 {
 	float x, y, z, w;
 	Vector4 () {}
-	Vector4 (float xx, float yy, float zz, float ww);
+	Vector4 (float xx, float yy = 0, float zz = 0, float ww = 0);
 	Vector4 operator - () const;
 	Vector4 operator + (const Vector4 &rhs) const;
 	Vector4 operator - (const Vector4 &rhs) const;

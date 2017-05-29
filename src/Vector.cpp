@@ -43,7 +43,7 @@ Vector4 Vector4 :: operator * (float f) const
 
 Vector4 Vector4 :: Cross (const Vector4 &rhs) const
 {
-    return {y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x, w};
+    return {y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x};
 }
 
 float Vector4 :: Dot (const Vector4 &rhs) const
@@ -54,5 +54,5 @@ float Vector4 :: Dot (const Vector4 &rhs) const
 Vector4 Vector4 :: Normalize () const
 {
     float inv = 1.0f / sqrtf (x * x + y * y + z * z);
-    return {x * inv, y * inv, z * inv, w};
+    return {x * inv, y * inv, z * inv};
 }
