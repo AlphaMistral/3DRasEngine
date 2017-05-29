@@ -2,7 +2,8 @@
 #include "Vector.hpp"
 #include "Matrix.hpp"
 #include "RasTransform.hpp"
-#include "Temp.hpp"
+#include "Model.hpp"
+#include "Renderer.hpp"
 
 using namespace std;
 
