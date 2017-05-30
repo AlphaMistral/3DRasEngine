@@ -21,9 +21,9 @@ int main ()
     //renderer.DrawModel (sphere, true, false);
     //Model bunny ("res/bunny", { 0.0f, 0.0f, 0.0f }, { 0.1f, 0.8f, 0.7f });
     //renderer.DrawModel (bunny, true, false);
-    Model cube ("res/cube", { -2.0f, 0.0f, 2.0f }, { 0.3f, 0.8f, 0.8f });
+    Model cube ("res/cube", { -0.0f, 0.0f, 0.0f }, { 0.3f, 0.8f, 0.8f });
+    cube.worldMat = RasTransform :: ScaleMatrix(cube.worldMat, 2, 2, 2);
     cube.worldMat = RasTransform :: RotateMatrixByEuler(cube.worldMat, acos(-1) / 10, 0, 0);
-    cube.worldMat = RasTransform :: ScaleMatrix(cube.worldMat, 2, 1, 8);
     renderer.DrawModel (cube, true, false);
     //Model cubeFrame ("res/cube", { 4.0f, 1.8f, -2.2f }, { 0.5f, 0.8f, 0.8f });
     //renderer.DrawModel (cubeFrame, false, true);

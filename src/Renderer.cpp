@@ -45,7 +45,7 @@ void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
     {
         outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
         outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);
-        outVertex.normal = RasTransform :: TransformDir(normal, nmv);
+        outVertex.normal = RasTransform :: TransformDir(normal, nmv).Normalize ();
         outVertex.uv = uv;
     };
     
