@@ -19,6 +19,7 @@ struct Matrix4x4
     float m[4][4];
     Matrix4x4 ();
     Matrix4x4 operator * (const Matrix4x4 &rhs) const;
+    Matrix4x4 operator * (const float x) const;
     void Invert ();
     Matrix4x4 InvertTranspose () const;
 };

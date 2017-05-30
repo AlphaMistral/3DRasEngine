@@ -66,3 +66,28 @@ Matrix4x4 RasTransform :: CreateModelMatrix (const Vector4 &translate)
     mat.m[3][0] = translate.x; mat.m[3][1] = translate.y; mat.m[3][2] = translate.z;
     return mat;
 }
+
+Matrix4x4 RasTransform :: RotateMatrixByEuler (Matrix4x4 m, float h, float p, float b)
+{
+    Matrix4x4 mat;
+    mat.m[0][0] = cos(h) * cos(b) + sin(h) * sin(p) * sin(b);
+    mat.m[0][1] = sin(b) * cos(p);
+    mat.m[0][2] = -sin(h) * cos(b) + cos(h) * sin(p) * sin(b);
+    mat.m[1][0] = -cos(h) * sin(b) + sin(h) * sin(p) * cos(b);
+    mat.m[1][1] = cos(b) * cos(p);
+    mat.m[1][2] = sin(b) * sin(h) + cos(h) * sin(p) * cos(b);
+    mat.m[2][0] = sin(h) * cos(p);
+    mat.m[2][1] = -sin(p);
+    mat.m[2][2] = cos(h) * cos(p);
+    return mat * m;
+}
+
+Matrix4x4 RasTransform :: ScaleMatrix (const Matrix4x4 m, const float x, const float y, const float z)
+{
+    Matrix4x4 mat;
+    mat.m[0][0] = x;
+    mat.m[1][1] = y;
+    mat.m[2][2] = z;
+    return mat * m;
+}
+

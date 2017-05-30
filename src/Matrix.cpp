@@ -27,6 +27,19 @@ Matrix4x4 Matrix4x4 :: operator * (const Matrix4x4 &rhs) const
     return temp;
 }
 
+Matrix4x4 Matrix4x4 :: operator * (const float x) const
+{
+    Matrix4x4 temp;
+    for (int i = 0;i < 4;i++)
+    {
+        for (int j = 0;j < 4;j++)
+        {
+            temp.m[i][j] = m[i][j] * x;
+        }
+    }
+    return temp;
+}
+
 void Matrix4x4 :: Invert ()
 {
     Matrix4x4 temm = *this;

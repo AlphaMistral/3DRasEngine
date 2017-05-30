@@ -24,6 +24,8 @@ public:
     static Matrix4x4 CreateProjectionMatrix (float fov, float aspr, float np, float fp);
     static Matrix4x4 CreateViewMatrix (const Vector4 &look, const Vector4 &at, const Vector4 &up);
     static Matrix4x4 CreateModelMatrix (const Vector4 &translate);
+    static Matrix4x4 RotateMatrixByEuler (const Matrix4x4 m, const float heading, const float pitch, const float bank);
+    static Matrix4x4 ScaleMatrix (const Matrix4x4 m, const float x, const float y, const float z);
 };
 
 #endif /* RasTransform_hpp */
