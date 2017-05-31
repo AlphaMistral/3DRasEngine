@@ -38,7 +38,7 @@ public:
     void Normalize ();
     
     float getRotationAngle () const;
-    Vector4 getRotationAxis () const;
+    Vector3 getRotationAxis () const;
     
     static float Dot (const Quaternion &a, const Quaternion &b);
     static Quaternion Slerp (const Quaternion &p, const Quaternion &q, float t);
