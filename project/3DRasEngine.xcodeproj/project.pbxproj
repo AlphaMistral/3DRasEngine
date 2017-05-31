@@ -24,6 +24,7 @@
 		2877A8D51EDD441D0026AF21 /* Renderer.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C41EDD441D0026AF21 /* Renderer.hpp */; };
 		2877A8D61EDD441D0026AF21 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C51EDD441D0026AF21 /* Vector.cpp */; };
 		2877A8D71EDD441D0026AF21 /* Vector.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C61EDD441D0026AF21 /* Vector.hpp */; };
+		2877A8DA1EDDD7220026AF21 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8D81EDDD7220026AF21 /* Quaternion.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,8 @@
 		2877A8C41EDD441D0026AF21 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Renderer.hpp; path = ../src/Renderer.hpp; sourceTree = "<group>"; };
 		2877A8C51EDD441D0026AF21 /* Vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Vector.cpp; path = ../src/Vector.cpp; sourceTree = "<group>"; };
 		2877A8C61EDD441D0026AF21 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Vector.hpp; path = ../src/Vector.hpp; sourceTree = "<group>"; };
+		2877A8D81EDDD7220026AF21 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quaternion.cpp; path = ../src/Quaternion.cpp; sourceTree = "<group>"; };
+		2877A8D91EDDD7220026AF21 /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Quaternion.hpp; path = ../src/Quaternion.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,8 @@
 		283107E71EDC02FC006746EC = {
 			isa = PBXGroup;
 			children = (
+				2877A8D81EDDD7220026AF21 /* Quaternion.cpp */,
+				2877A8D91EDDD7220026AF21 /* Quaternion.hpp */,
 				2877A8B61EDD441D0026AF21 /* BMPManager.cpp */,
 				2877A8B71EDD441D0026AF21 /* BMPManager.hpp */,
 				2877A8B81EDD441D0026AF21 /* main.cpp */,
@@ -180,6 +185,7 @@
 				2877A8CF1EDD441D0026AF21 /* Model.hpp in Sources */,
 				2877A8D01EDD441D0026AF21 /* ObjectProperties.cpp in Sources */,
 				2877A8D11EDD441D0026AF21 /* ObjectProperties.hpp in Sources */,
+				2877A8DA1EDDD7220026AF21 /* Quaternion.cpp in Sources */,
 				2877A8D21EDD441D0026AF21 /* RasTransform.cpp in Sources */,
 				2877A8D31EDD441D0026AF21 /* RasTransform.hpp in Sources */,
 				2877A8D41EDD441D0026AF21 /* Renderer.cpp in Sources */,
