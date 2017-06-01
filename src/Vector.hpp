@@ -12,6 +12,35 @@
 #include <cstdio>
 #include <cmath>
 
+struct Vector2
+{
+    float x, y;
+    Vector2 () {}
+    Vector2 (float xx, float yy = 0);
+    Vector2 operator - () const;
+    Vector2 operator + (const Vector2 &rhs) const;
+    Vector2 operator - (const Vector2 &rhs) const;
+    Vector2 operator * (const Vector2 &rhs) const;
+    Vector2 operator * (float f) const;
+    float Dot (const Vector2 &rhs) const;
+    Vector2 Normalize () const;
+};
+
+struct Vector3
+{
+    float x, y, z;
+    Vector3 () {}
+    Vector3 (float xx, float yy = 0, float zz = 0);
+    Vector3 operator - () const;
+    Vector3 operator + (const Vector3 &rhs) const;
+    Vector3 operator - (const Vector3 &rhs) const;
+    Vector3 operator * (const Vector3 &rhs) const;
+    Vector3 operator * (float f) const;
+    Vector3 Cross (const Vector3 &rhs) const;
+    float Dot (const Vector3 &rhs) const;
+    Vector3 Normalize () const;
+};
+
 struct Vector4
 {
 	float x, y, z, w;
