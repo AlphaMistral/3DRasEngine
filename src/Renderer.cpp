@@ -39,7 +39,7 @@ void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
     mv = model.worldMat * view;
     mvp = mv * proj;
     nmv = mv.InvertTranspose ();
-    light.viewPos = RasTransform :: TransformPoint(light.pos, mv);
+    light.viewPos = RasTransform :: TransformPoint(light.pos, view);
     
     auto VertexShader = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
     {
