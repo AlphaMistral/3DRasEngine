@@ -18,6 +18,7 @@
 #include <limits>
 
 #include "Model.hpp"
+#include "ShaderLab.hpp"
 #include "ShaderProperty.hpp"
 
 using namespace std;
@@ -31,6 +32,7 @@ public:
 	vector <Model> modelList;
     Matrix4x4 proj, view, mv, mvp, nmv;
     Light light;
+	ShaderLab shaderLab;
     
     Renderer (int w, int h);
     
@@ -38,9 +40,9 @@ public:
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
-	void DrawModel (Model &model, function<Vertex(const VertexInput&)>, function<Vector4(const Vertex&)>);
+	void DrawModel (Model &model, VShader, FShader);
 	void DrawAllModels ();
-	void DrawAllModelsWithSpecifiedShaders (function<void(const VertexInput&)> vertex, function<Vector4(const Vertex &)> fragment);
+	void DrawAllModelsWithSpecifiedShaders (VShader, FShader);
 	Texture GenerateDepthMap ();
 	
 	void SetupProperties ();
@@ -51,7 +53,7 @@ public:
     
     static inline bool BackFaceCulling (const Vector4 &p0, const Vector4 p1, const Vector4 &p2);
     
-    void FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, function<Vector4(Vertex&)> = NULL);
+    void FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader);
     
     static bool TriangleCheck (const Vertex &v0, const Vertex &v1, const Vertex &v2, Vertex &v, Vector4 &w);
     
