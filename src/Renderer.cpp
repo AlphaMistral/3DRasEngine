@@ -12,8 +12,8 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = vector<Vector4> (w * h, {0, 0, 0.34f, 0});
-    depthBuffer = vector<float> (w * h, numeric_limits<float> :: max ());
+    frameBuffer = std::vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
+    depthBuffer = std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
 void Renderer :: SetFrustum (float fov, float aspr, float np, float fp)
@@ -34,28 +34,21 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.specularColor = spec;
 }
 
-void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
+void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
 {
-    mv = model.worldMat * view;
-    mvp = mv * proj;
-    nmv = mv.InvertTranspose ();
+    ShaderLab :: RAS_MATRIX_V = view;
+	ShaderLab :: RAS_MATRIX_P = proj;
+	ShaderLab :: RAS_MATRIX_MV = model.worldMat * view;
+	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
+	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_M.InvertTranspose();
     light.viewPos = RasTransform :: TransformPoint(light.pos, view);
-    
-    auto VertexShader = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
-    {
-        outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
-        outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);
-        outVertex.normal = RasTransform :: TransformDir(normal, nmv).Normalize ();
-        outVertex.uv = uv;
-    };
-    
     for (auto &idx : model.index)
     {
         Vertex outVertex[3];
         bool badTriangle = false;
         for (int i = 0;i < 3;i++)
         {
-            VertexShader (model.vertex[idx.pos[i]], model.normal[idx.normal[i]], model.uv[idx.uv[i]], outVertex[i]);
+			outVertex[i] = vShader (VertexInput(model.vertex[idx.pos[i]], model.normal[idx.normal[i]], model.uv[idx.uv[i]]));
             if (outVertex[i].pos.z < 0.0f || outVertex[i].pos.z > 1.0f)
             {
                 badTriangle = true;
@@ -64,8 +57,7 @@ void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
             NDC2Screen (outVertex[i].pos);
         }
         if (badTriangle || BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos))continue;
-        if (drawTex)FillTriangle(model, outVertex[0], outVertex[1], outVertex[2]);
-        if (drawWireFrame)DrawTriangle(outVertex[0], outVertex[1], outVertex[2], {0, 1.0f, 1.0f, 0});
+        FillTriangle(model, outVertex[0], outVertex[1], outVertex[2], fShader);
     }
 }
 
@@ -82,28 +74,28 @@ inline bool Renderer :: BackFaceCulling (const Vector4 &p0, const Vector4 p1, co
     return (p0.Dot ((p1 - p0).Cross (p2 - p0)) >= 0);
 }
 
-void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2)
+void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader fShader)
 {
     auto PixelShader = [&model, this] (Vertex &v) -> Vector4
     {
         auto ldir = (light.viewPos - v.viewPos).Normalize ();
-        auto lambertian = max (0.0f, ldir.Dot (v.normal));
+        auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
         auto specular = 0.0f;
         if (lambertian > 0)
         {
             auto viewDir = (-v.viewPos).Normalize ();
             auto half = (ldir + viewDir).Normalize ();
-            auto angle = max (0.0f, half.Dot (v.normal));
+            auto angle = std::max (0.0f, half.Dot (v.normal));
             specular = pow (angle, 16.0f);
         }
         return (TextureLookup (model.material.texture, v.uv.x, v.uv.y) * (light.ambientColor * model.material.ka + light.diffuseColor * lambertian * model.material.kd) + light.specularColor * specular * model.material.ks);
     };
     
     Vector4 weight = {0, 0, 0, EdgeFunc (v0.pos, v1.pos, v2.pos)};
-    int x0 = std::max (0, (int)floor (min (v0.pos.x, min (v1.pos.x, v2.pos.x))));
-    int y0 = std::max (0, (int)floor (min (v0.pos.y, min (v1.pos.y, v2.pos.y))));
-    int x1 = std::min (width - 1, (int)floor (std::max (v0.pos.x, max (v1.pos.x, v2.pos.x))));
-    int y1 = std::min (height - 1, (int)floor (std::max (v0.pos.y, max (v1.pos.y, v2.pos.y))));
+    int x0 = std::max (0, (int)floor (std::min (v0.pos.x, std::min (v1.pos.x, v2.pos.x))));
+    int y0 = std::max (0, (int)floor (std::min (v0.pos.y, std::min (v1.pos.y, v2.pos.y))));
+    int x1 = std::min (width - 1, (int)floor (std::max (v0.pos.x, std::max (v1.pos.x, v2.pos.x))));
+    int y1 = std::min (height - 1, (int)floor (std::max (v0.pos.y, std::max (v1.pos.y, v2.pos.y))));
     for (int y = y0;y <= y1;y++)
     {
         for (int x = x0;x <= x1;x++)
@@ -112,7 +104,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, PixelShader (v), v.pos.z);
+            DrawPoint (x, y, fShader (model, v), v.pos.z);
         }
     }
 }
@@ -152,7 +144,7 @@ inline Vector4 Renderer :: TextureLookup (const Texture &texture, float s, float
 
 inline float Renderer :: Saturate (float n)
 {
-    return min (1.0f, max (0.0f, n));
+    return std::min (1.0f, std::max (0.0f, n));
 }
 
 inline Vector4 Renderer :: BilinearFiltering (const Texture &texture, float s, float t)
@@ -233,4 +225,28 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
         frameBuffer[x + y * width] = color; // write frame buffer
         depthBuffer[x + y * width] = z; // write z buffer
     }
+}
+
+void Renderer :: AddModel(const Model &mod)
+{
+	modelList.push_back(mod);
+}
+
+void Renderer :: DrawAllModels()
+{
+    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+	{
+		DrawModel(*i, NULL, NULL);
+	}
+}
+
+void Renderer :: DrawAllModelsWithSpecifiedShaders(VShader vShader, FShader fShader)
+{
+	
+}
+
+Texture Renderer :: GenerateDepthMap()
+{
+	//DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
+	return Texture();
 }

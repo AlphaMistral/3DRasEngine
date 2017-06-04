@@ -18,30 +18,40 @@
 #include <limits>
 
 #include "Model.hpp"
-
-using namespace std;
+#include "ShaderLab.hpp"
+#include "ShaderProperty.hpp"
 
 class Renderer
 {
 public:
     int width, height;
-    vector <Vector4> frameBuffer;
-    vector <float> depthBuffer;
+    std::vector <Vector4> frameBuffer;
+    std::vector <float> depthBuffer;
+    std::vector <Model> modelList;
     Matrix4x4 proj, view, mv, mvp, nmv;
     Light light;
+	ShaderLab shaderLab;
     
     Renderer (int w, int h);
     
     void SetFrustum (float fov, float aspr, float np, float fp);
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
-    void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
-    
+    //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
+	void DrawModel (Model &model, VShader, FShader);
+	void DrawAllModels ();
+	void DrawAllModelsWithSpecifiedShaders (VShader, FShader);
+	Texture GenerateDepthMap ();
+	
+	void SetupProperties ();
+	
+	void AddModel (const Model &mod);
+	
     inline void NDC2Screen (Vector4 &pos);
     
     static inline bool BackFaceCulling (const Vector4 &p0, const Vector4 p1, const Vector4 &p2);
     
-    void FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2);
+    void FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader);
     
     static bool TriangleCheck (const Vertex &v0, const Vertex &v1, const Vertex &v2, Vertex &v, Vector4 &w);
     

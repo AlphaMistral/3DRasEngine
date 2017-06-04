@@ -14,9 +14,7 @@
 #include <cstring>
 #include <cstdlib>
 
-#include "Vector.hpp"
-#include "Matrix.hpp"
-#include "Quaternion.hpp"
+#include "RasMath.hpp"
 
 class RasTransform
 {
