@@ -163,7 +163,75 @@ Quaternion Quaternion :: Conjugate(const Quaternion &q)
     return result;
 }
 
+Quaternion Quaternion :: GetQuaternionFromEulerAngles(const Vector3 &eulerAngles)
+{
+    float h = eulerAngles.y / 2;
+    float p = eulerAngles.x / 2;
+    float b = eulerAngles.z / 2;
+    Quaternion q;
+    q.w = cos(h) * cos(p) * cos(b) + sin(h) * sin(p) * sin(b);
+    q.x = cos(h) * sin(p) * cos(b) + sin(h) * cos(p) * sin(b);
+    q.y = sin(h) * cos(p) * cos(b) - cos(h) * sin(p) * sin(b);
+    q.z = cos(h) * cos(p) * sin(b) - sin(h) * sin(p) * cos(b);
+    return q;
+}
 
+Quaternion Quaternion :: GetQuaternionFromRotationMatrix(const Matrix4x4 &mat)
+{
+    Quaternion q;
+    float fourWSquaredMinus1 = mat.m[0][0] + mat.m[1][1] + mat.m[2][2];
+    float fourXSquaredMinus1 = mat.m[0][0] - mat.m[1][1] - mat.m[2][2];
+    float fourYSquaredMinus1 = mat.m[1][1] - mat.m[0][0] - mat.m[2][2];
+    float fourZSquaredMinus1 = mat.m[2][2] - mat.m[0][0] - mat.m[1][1];
+    int bIdx = 0;
+    float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+    if (fourXSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+        fourBiggestSquaredMinus1 = fourXSquaredMinus1;
+        bIdx = 1;
+    }
+    if (fourYSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+        fourBiggestSquaredMinus1 = fourYSquaredMinus1;
+        bIdx = 2;
+    }
+    if (fourZSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+        fourBiggestSquaredMinus1 = fourZSquaredMinus1;
+        bIdx = 3;
+    }
+    float biggestVal = sqrt(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
+    float mult = 0.25f / biggestVal;
+    switch (bIdx)
+    {
+        case 0:
+            q.w = biggestVal;
+            q.x = (mat.m[1][2] - mat.m[2][1]) * mult;
+            q.y = (mat.m[2][0] - mat.m[0][2]) * mult;
+            q.z = (mat.m[0][1] - mat.m[1][0]) * mult;
+            break;
+        case 1:
+            q.x = biggestVal;
+            q.w = (mat.m[1][2] - mat.m[2][1]) * mult;
+            q.y = (mat.m[0][1] + mat.m[1][0]) * mult;
+            q.z = (mat.m[2][0] + mat.m[0][2]) * mult;
+            break;
+        case 2:
+            q.y = biggestVal;
+            q.w = (mat.m[2][0] - mat.m[0][2]) * mult;
+            q.x = (mat.m[0][1] + mat.m[1][0]) * mult;
+            q.z = (mat.m[1][2] + mat.m[2][1]) * mult;
+            break;
+        case 3:
+            q.z = biggestVal;
+            q.w = (mat.m[0][1] - mat.m[1][0]) * mult;
+            q.x = (mat.m[2][0] - mat.m[0][2]) * mult;
+            q.y = (mat.m[1][2] - mat.m[2][1]) * mult;
+        default:
+            break;
+    }
+    return q;
+}
 
 
 

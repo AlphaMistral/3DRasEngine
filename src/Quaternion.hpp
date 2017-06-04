@@ -17,6 +17,7 @@
 #include <assert.h>
 
 #include "Vector.hpp"
+#include "Matrix.hpp"
 
 using namespace std;
 
@@ -44,6 +45,9 @@ public:
     static Quaternion Slerp (const Quaternion &p, const Quaternion &q, float t);
     static Quaternion Conjugate (const Quaternion &q);
     static Quaternion Pow (const Quaternion &q, float exponent);
+    
+    static Quaternion GetQuaternionFromEulerAngles(const Vector3 &eulerAngles);
+    static Quaternion GetQuaternionFromRotationMatrix(const Matrix4x4 &mat);
 };
 
 
