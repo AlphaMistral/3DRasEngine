@@ -19,8 +19,6 @@
 #include "Vector.hpp"
 #include "Matrix.hpp"
 
-using namespace std;
-
 class Quaternion
 {
 public:

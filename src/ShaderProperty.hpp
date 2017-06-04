@@ -18,8 +18,6 @@
 #include "RasTransform.hpp"
 #include "ObjectProperties.hpp"
 
-using namespace std;
-
 struct VertexInput
 {
     Vector4 pos;

@@ -19,8 +19,6 @@
 #include "Matrix.hpp"
 #include "ObjectProperties.hpp"
 
-using namespace std;
-
 enum LightType
 {
     Directional,

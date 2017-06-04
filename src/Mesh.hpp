@@ -18,15 +18,13 @@
 #include "RasMath.hpp"
 #include "ObjectProperties.hpp"
 
-using namespace std;
-
 class Mesh
 {
 public:
     Mesh (){}
     
-    vector <Vector4> vertex, normal, uv;
-    vector <Index> index;
+    std::vector <Vector4> vertex, normal, uv;
+    std::vector <Index> index;
 };
 
 #endif /* Mesh_hpp */

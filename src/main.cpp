@@ -2,8 +2,6 @@
 #include "Renderer.hpp"
 #include "ShaderProperty.hpp"
 
-using namespace std;
-
 int main ()
 {
     const int WIDTH = 1024, HEIGHT = 768;

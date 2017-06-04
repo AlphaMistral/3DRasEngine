@@ -8,28 +8,28 @@
 
 #include "Model.hpp"
 
-Model :: Model (string name, const Vector4 &pos, Material m)
+Model :: Model (std::string name, const Vector4 &pos, Material m)
 {
     material = m;
-    vertex = vector<Vector4> (1, {0});
-    normal = vector<Vector4> (1, {0});
-    uv = vector <Vector4> (1, {0});
+    vertex = std::vector<Vector4> (1, {0});
+    normal = std::vector<Vector4> (1, {0});
+    uv = std::vector <Vector4> (1, {0});
     worldMat = RasTransform::CreateModelMatrix(pos);
     LoadOBJ(name + ".obj");
     if (uv.size() > 1)
         BMPManager::LoadBMP(material.texture, name + ".bmp");
 }
 
-void Model :: LoadOBJ(string str)
+void Model :: LoadOBJ(std::string str)
 {
     float x, y, z;
     char dummy;
-    ifstream iss (str);
+    std::ifstream iss (str);
     while (getline (iss, str))
     {
         if (str.length() < 2)continue;
-        istringstream istr (str);
-        string token;
+        std::istringstream istr (str);
+        std::string token;
         if (str[1] == 't' && str[0] == 'v')
         {
             istr >> token >> x >> y;
@@ -48,14 +48,14 @@ void Model :: LoadOBJ(string str)
         else if (str[0] == 'f')
         {
             Index idx = {{0}};
-            if (str.find("//") != string::npos)
+            if (str.find("//") != std::string::npos)
             {
                 istr >> token >> idx.pos[0] >> dummy >> dummy >> idx.normal[0] >> idx.pos[1] >> dummy >> dummy >> idx.normal[1] >> idx.pos[2] >> dummy >> dummy >> idx.normal[2];
             }
             else
             {
                 size_t cnt = 0, pos = str.find('/');
-                while (pos != string::npos)
+                while (pos != std::string::npos)
                 {
                     cnt++;
                     pos= str.find('/', pos + 1);

@@ -15,16 +15,15 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
 #include "Vector.hpp"
 #include "ObjectProperties.hpp"
-
-using namespace std;
 
 class BMPManager
 {
 public:
-    static void SaveBMP (vector <Vector4> &frameBuffer, int width, int height, string fileName);
-    static bool LoadBMP (Texture &texture, string fileName);
+    static void SaveBMP (std::vector <Vector4> &frameBuffer, int width, int height, std::string fileName);
+    static bool LoadBMP (Texture &texture, std::string fileName);
 };
 
 #endif /* BMPManager_hpp */

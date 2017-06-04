@@ -21,15 +21,13 @@
 #include "ShaderLab.hpp"
 #include "ShaderProperty.hpp"
 
-using namespace std;
-
 class Renderer
 {
 public:
     int width, height;
-    vector <Vector4> frameBuffer;
-    vector <float> depthBuffer;
-	vector <Model> modelList;
+    std::vector <Vector4> frameBuffer;
+    std::vector <float> depthBuffer;
+    std::vector <Model> modelList;
     Matrix4x4 proj, view, mv, mvp, nmv;
     Light light;
 	ShaderLab shaderLab;

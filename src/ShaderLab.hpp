@@ -18,8 +18,6 @@
 #include "Model.hpp"
 #include "ShaderProperty.hpp"
 
-using namespace std;
-
 class ShaderLab
 {
 public:

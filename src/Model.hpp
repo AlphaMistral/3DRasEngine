@@ -23,15 +23,13 @@
 #include "Mesh.hpp"
 #include "BMPManager.hpp"
 
-using namespace std;
-
 class Model : public Mesh
 {
 public:
     Material material;
     Matrix4x4 worldMat;
-    Model (string name, const Vector4 &pos, Material m);
-    void LoadOBJ (string name);
+    Model (std::string name, const Vector4 &pos, Material m);
+    void LoadOBJ (std::string name);
 };
 
 #endif /* Model_hpp */

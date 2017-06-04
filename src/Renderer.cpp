@@ -12,8 +12,8 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
-    depthBuffer = vector<float> (w * h, numeric_limits<float> :: max ());
+    frameBuffer = std::vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
+    depthBuffer = std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
 void Renderer :: SetFrustum (float fov, float aspr, float np, float fp)
@@ -79,23 +79,23 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
     auto PixelShader = [&model, this] (Vertex &v) -> Vector4
     {
         auto ldir = (light.viewPos - v.viewPos).Normalize ();
-        auto lambertian = max (0.0f, ldir.Dot (v.normal));
+        auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
         auto specular = 0.0f;
         if (lambertian > 0)
         {
             auto viewDir = (-v.viewPos).Normalize ();
             auto half = (ldir + viewDir).Normalize ();
-            auto angle = max (0.0f, half.Dot (v.normal));
+            auto angle = std::max (0.0f, half.Dot (v.normal));
             specular = pow (angle, 16.0f);
         }
         return (TextureLookup (model.material.texture, v.uv.x, v.uv.y) * (light.ambientColor * model.material.ka + light.diffuseColor * lambertian * model.material.kd) + light.specularColor * specular * model.material.ks);
     };
     
     Vector4 weight = {0, 0, 0, EdgeFunc (v0.pos, v1.pos, v2.pos)};
-    int x0 = std::max (0, (int)floor (min (v0.pos.x, min (v1.pos.x, v2.pos.x))));
-    int y0 = std::max (0, (int)floor (min (v0.pos.y, min (v1.pos.y, v2.pos.y))));
-    int x1 = std::min (width - 1, (int)floor (std::max (v0.pos.x, max (v1.pos.x, v2.pos.x))));
-    int y1 = std::min (height - 1, (int)floor (std::max (v0.pos.y, max (v1.pos.y, v2.pos.y))));
+    int x0 = std::max (0, (int)floor (std::min (v0.pos.x, std::min (v1.pos.x, v2.pos.x))));
+    int y0 = std::max (0, (int)floor (std::min (v0.pos.y, std::min (v1.pos.y, v2.pos.y))));
+    int x1 = std::min (width - 1, (int)floor (std::max (v0.pos.x, std::max (v1.pos.x, v2.pos.x))));
+    int y1 = std::min (height - 1, (int)floor (std::max (v0.pos.y, std::max (v1.pos.y, v2.pos.y))));
     for (int y = y0;y <= y1;y++)
     {
         for (int x = x0;x <= x1;x++)
@@ -144,7 +144,7 @@ inline Vector4 Renderer :: TextureLookup (const Texture &texture, float s, float
 
 inline float Renderer :: Saturate (float n)
 {
-    return min (1.0f, max (0.0f, n));
+    return std::min (1.0f, std::max (0.0f, n));
 }
 
 inline Vector4 Renderer :: BilinearFiltering (const Texture &texture, float s, float t)
@@ -234,7 +234,7 @@ void Renderer :: AddModel(const Model &mod)
 
 void Renderer :: DrawAllModels()
 {
-	for (vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
 		DrawModel(*i, NULL, NULL);
 	}
