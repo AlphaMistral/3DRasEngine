@@ -4,6 +4,7 @@
 #include "RasTransform.hpp"
 #include "Model.hpp"
 #include "Renderer.hpp"
+#include "ShaderProperty.hpp"
 
 using namespace std;
 
@@ -19,17 +20,16 @@ int main ()
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
     // Model (filepath, position, material)
     Model sphere ("res/sphere", { 2.5f, 0.5f, 1.5f }, { 0.1f, 1.0f, 0.5f });
-    renderer.DrawModel (sphere, VertexShader, FragmentShaderDepth);
+    renderer.DrawModel (sphere, VV, FragmentShaderDepth);
     Model bunny ("res/bunny", { 0.0f, 0.0f, 0.0f }, { 0.1f, 0.8f, 0.7f });
-    renderer.DrawModel (bunny, VertexShader, FragmentShaderDepth);
+    renderer.DrawModel (bunny, VV, FragmentShaderDepth);
     Model cube ("res/cube", { -2.0f, 0.0f, 2.0f }, { 0.3f, 0.8f, 0.8f });
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
-    renderer.DrawModel (cube, VertexShader, FragmentShaderDepth);
+    renderer.DrawModel (cube, VV, FragmentShaderDepth);
     //Model cubeFrame ("res/cube", { 4.0f, 1.8f, -2.2f }, { 0.5f, 0.8f, 0.8f });
     //renderer.DrawModel (cubeFrame, false, true);
     
     // save the frame buffer to a bmp file
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");
-	
     return 0;
 }

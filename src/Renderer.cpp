@@ -12,7 +12,7 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = vector<Vector4> (w * h, {0, 0, 0.0f, 0});
+    frameBuffer = vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
     depthBuffer = vector<float> (w * h, numeric_limits<float> :: max ());
 }
 
@@ -34,7 +34,7 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.specularColor = spec;
 }
 
-void Renderer :: DrawModel(Model &model, function<Vertex(const VertexInput&)> vertexShader, function<Vector4(const Vertex&)> fragmentShader)
+void Renderer :: DrawModel(Model &model, function<Vertex(const VertexInput &)> vertexShader, function<Vector4(const Vertex&)> fragmentShader)
 {
 	RAS_MATRIX_V = view;
 	RAS_MATRIX_P = proj;
@@ -74,8 +74,9 @@ inline bool Renderer :: BackFaceCulling (const Vector4 &p0, const Vector4 p1, co
     return (p0.Dot ((p1 - p0).Cross (p2 - p0)) >= 0);
 }
 
-void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, function<Vector4(const Vertex&)> fragmentShader)
+void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, function<Vector4(Vertex&)> fragmentShader)
 {
+	ttt++;
     auto PixelShader = [&model, this] (Vertex &v) -> Vector4
     {
         auto ldir = (light.viewPos - v.viewPos).Normalize ();
@@ -236,7 +237,7 @@ void Renderer :: DrawAllModels()
 {
 	for (vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
-		DrawModel(*i);
+		DrawModel(*i, NULL, NULL);
 	}
 }
 
@@ -247,6 +248,6 @@ void Renderer :: DrawAllModelsWithSpecifiedShaders(function<void(const VertexInp
 
 Texture Renderer :: GenerateDepthMap()
 {
-	DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
+	//DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
 	return Texture();
 }

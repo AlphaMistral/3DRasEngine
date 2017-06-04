@@ -12,10 +12,10 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <functional>
 #include <cmath>
 
 #include "RasTransform.hpp"
-#include "Model.hpp"
 #include "ObjectProperties.hpp"
 
 using namespace std;
@@ -33,6 +33,8 @@ static Vector4 WORLD_SPACE_LIGHT_COLOR;
 
 static Vector4 PROJECTION_PARAMS;
 
+static int ttt;
+
 struct VertexInput
 {
     Vector4 pos;
@@ -47,6 +49,10 @@ struct VertexInput
     }
 };
 
+typedef Vertex (*VShader) (const VertexInput&);
+
+Vertex VV (const VertexInput &inVertex);
+
 auto VertexShader = [] (const VertexInput &inVertex) -> Vertex
 {
     Vertex outVertex;
@@ -57,29 +63,12 @@ auto VertexShader = [] (const VertexInput &inVertex) -> Vertex
     return outVertex;
 };
 
-auto VertexShaderDepth = [] (const VertexInput &inVertex) -> Vertex
-{
-    Vertex outVertex;
-    outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
-    return outVertex;
-};
-
-auto FragmentShaderLambertian = [] (const Vertex &i) -> Vector4
-{
-    return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-};
-
-auto FragmentShaderBlinnPhong = [] (const Vertex &i) -> Vector4
-{
-    return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-};
-
 auto FragmentShaderDepth = [] (const Vertex &i) -> Vector4
 {
-    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * xxx;
-    printf("%f\n", depth);
+    printf ("%d\n", ttt);
+    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
+    //printf ("%f\n", depth);
     return Vector4(depth, depth, depth, 1.0f);
 };
-
 
 #endif /* ShaderProperty_hpp */
