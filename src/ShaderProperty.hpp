@@ -41,7 +41,7 @@ auto VertexShader = [] (const Vector4 &pos, const Vector4 &normal, const Vector4
 
 auto VertexShaderDepth = [] (const Vector4 &pos, const Matrix4x4 &worldMat, Vertex &outVertex)
 {
-    
+    outVertex.pos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MVP);
 };
 
 auto FragmentShaderLambertian = [] (const Vertex &i) -> Vector4
