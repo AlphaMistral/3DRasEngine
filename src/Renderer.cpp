@@ -41,7 +41,10 @@ void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
 	ShaderLab :: RAS_MATRIX_MV = model.worldMat * view;
 	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
 	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_M.InvertTranspose();
-    light.viewPos = RasTransform :: TransformPoint(light.pos, view);
+	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE = light.specularColor;
     for (auto &idx : model.index)
     {
         Vertex outVertex[3];

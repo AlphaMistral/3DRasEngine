@@ -14,7 +14,7 @@ int main ()
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
     Model sphere ("res/sphere", { 2.5f, 0.5f, 1.5f }, { 0.1f, 1.0f, 0.5f });
 	VShader xxx = &ShaderLab::VertexShader;
-	FShader fff = &ShaderLab::FragmentDepth;
+	FShader fff = &ShaderLab::FragmentBlinnPhong;
     renderer.DrawModel (sphere, xxx, fff);
     Model bunny ("res/bunny", { 0.0f, 0.0f, 0.0f }, { 0.1f, 0.8f, 0.7f });
     renderer.DrawModel (bunny, xxx, fff);
