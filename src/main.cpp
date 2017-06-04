@@ -25,8 +25,8 @@ int main ()
     Model cube ("res/cube", { -2.0f, 0.0f, 2.0f }, { 0.3f, 0.8f, 0.8f });
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
     renderer.DrawModel (cube, true, false);
-    Model cubeFrame ("res/cube", { 4.0f, 1.8f, -2.2f }, { 0.5f, 0.8f, 0.8f });
-    renderer.DrawModel (cubeFrame, false, true);
+    //Model cubeFrame ("res/cube", { 4.0f, 1.8f, -2.2f }, { 0.5f, 0.8f, 0.8f });
+    //renderer.DrawModel (cubeFrame, false, true);
     
     // save the frame buffer to a bmp file
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");

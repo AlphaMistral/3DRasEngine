@@ -47,14 +47,14 @@ void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
     light.viewPos = RasTransform :: TransformPoint(light.pos, view);
 	
 	//Currently this is not used. 
-    auto VertexShader1 = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
-    {
-        outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
-        outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);
-        outVertex.normal = RasTransform :: TransformDir(normal, nmv).Normalize ();
-        outVertex.uv = uv;
-    };
-    
+//    auto VertexShader1 = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
+//    {
+//        outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
+//        outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);
+//        outVertex.normal = RasTransform :: TransformDir(normal, nmv).Normalize ();
+//        outVertex.uv = uv;
+//    };
+	
     for (auto &idx : model.index)
     {
         Vertex outVertex[3];
@@ -118,7 +118,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, PixelShader (v), v.pos.z);
+            DrawPoint (x, y, FragmentShaderDepth (v), v.pos.z);
         }
     }
 }
@@ -239,4 +239,28 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
         frameBuffer[x + y * width] = color; // write frame buffer
         depthBuffer[x + y * width] = z; // write z buffer
     }
+}
+
+void Renderer :: AddModel(const Model &mod)
+{
+	modelList.push_back(mod);
+}
+
+void Renderer :: DrawAllModels()
+{
+	for (vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+	{
+		DrawModel(*i);
+	}
+}
+
+void Renderer :: DrawAllModelsWithSpecifiedShaders(function<void(const Vector4&, Vertex&)> vertex, function<Vector4(const Vertex &)> fragment)
+{
+	
+}
+
+Texture Renderer :: GenerateDepthMap()
+{
+	DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
+	return Texture();
 }

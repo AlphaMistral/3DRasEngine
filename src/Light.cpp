@@ -8,12 +8,12 @@
 
 #include "Light.hpp"
 
-Light :: Light()
+LightBase :: LightBase()
 {
     type = LightType :: Directional;
 }
 
-Light :: Light(LightType t, Matrix4x4 mat, Vector4 c, float i)
+LightBase :: LightBase(LightType t, Matrix4x4 mat, Vector4 c, float i)
 {
     type = t;
     worldMat = mat;
@@ -21,7 +21,7 @@ Light :: Light(LightType t, Matrix4x4 mat, Vector4 c, float i)
     intensity = i;
 }
 
-void Light :: GenerateShadowMap()
+void LightBase :: GenerateShadowMap()
 {
     
 }

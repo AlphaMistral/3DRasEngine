@@ -39,8 +39,8 @@ public:
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
 	void DrawAllModels ();
-	void DrawAllModelsWithSpecifiedShaders ();
-	void GenerateDepthMap ();
+	void DrawAllModelsWithSpecifiedShaders (function<void(const Vector4&, Vertex&)> vertex, function<Vector4(const Vertex &)> fragment);
+	Texture GenerateDepthMap ();
 	
 	void SetupProperties ();
 	

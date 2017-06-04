@@ -31,6 +31,8 @@ static Matrix4x4 RAS_MATRIX_MVP;
 static Matrix4x4 RAS_MATRIX_IT_MV;
 static Vector4 WORLD_SPACE_LIGHT_COLOR;
 
+static Vector4 PROJECTION_PARAMS;
+
 auto VertexShader = [] (const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
 {
     outVertex.pos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MVP);
@@ -39,7 +41,7 @@ auto VertexShader = [] (const Vector4 &pos, const Vector4 &normal, const Vector4
     outVertex.uv = uv;
 };
 
-auto VertexShaderDepth = [] (const Vector4 &pos, const Matrix4x4 &worldMat, Vertex &outVertex)
+auto VertexShaderDepth = [] (const Vector4 &pos, Vertex &outVertex)
 {
     outVertex.pos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MVP);
 };
@@ -54,9 +56,11 @@ auto FragmentShaderBlinnPhong = [] (const Vertex &i) -> Vector4
     return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 };
 
-auto FragmentShaderDepth = [] (const Vertex &i) ->Vector4
+auto FragmentShaderDepth = [] (const Vertex &i) -> Vector4
 {
-    return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
+    printf("%f\n", depth);
+    return Vector4(depth, depth, depth, 1.0f);
 };
 
 

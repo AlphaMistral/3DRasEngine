@@ -17,6 +17,7 @@
 
 #include "Vector.hpp"
 #include "Matrix.hpp"
+#include "ObjectProperties.hpp"
 
 using namespace std;
 
@@ -27,32 +28,33 @@ enum LightType
     Spot
 };
 
-class Light
+class LightBase
 {
 public:
     LightType type;
     Matrix4x4 worldMat;
     Vector4 color;
     float intensity;
-    Light ();
-    Light (LightType type, Matrix4x4 worldMat, Vector4 c = Vector4(0.87f, 0.87f, 0.87f, 1.0f), float i = 1.0f);
+	Texture shadowMap;
+    LightBase ();
+    LightBase (LightType type, Matrix4x4 worldMat, Vector4 c = Vector4(0.87f, 0.87f, 0.87f, 1.0f), float i = 1.0f);
     virtual void GenerateShadowMap ();
     
 };
 
-class DirectionalLight : public Light
+class DirectionalLight : public LightBase
 {
 public:
     virtual void GenerateShadowMap (); //ortho
 };
 
-class PointLight : public Light
+class PointLight : public LightBase
 {
 public:
     virtual void GenerateShadowMap (); //cubeMap
 };
 
-class SpotLight : public Light
+class SpotLight : public LightBase
 {
 public:
     float angle; // [0, pi];
