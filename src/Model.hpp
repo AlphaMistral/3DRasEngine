@@ -20,7 +20,6 @@
 #include <sstream>
 
 #include "RasTransform.hpp"
-#include "Matrix.hpp"
 #include "Mesh.hpp"
 #include "BMPManager.hpp"
 

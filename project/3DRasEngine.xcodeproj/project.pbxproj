@@ -27,6 +27,8 @@
 		2877A8DA1EDDD7220026AF21 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8D81EDDD7220026AF21 /* Quaternion.cpp */; };
 		28A42F8D1EE1CDA400921E1A /* EulerAngles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28A42F8B1EE1CDA400921E1A /* EulerAngles.cpp */; };
 		28A42F901EE1CDC700921E1A /* RotationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */; };
+		28C97A551EE40A11006D3C95 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A531EE40A11006D3C95 /* Light.cpp */; };
+		28C97A571EE40C45006D3C95 /* RasMath.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A561EE40BFA006D3C95 /* RasMath.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +69,9 @@
 		28A42F8C1EE1CDA400921E1A /* EulerAngles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EulerAngles.hpp; path = ../src/EulerAngles.hpp; sourceTree = "<group>"; };
 		28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RotationMatrix.cpp; path = ../src/RotationMatrix.cpp; sourceTree = "<group>"; };
 		28A42F8F1EE1CDC700921E1A /* RotationMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RotationMatrix.hpp; path = ../src/RotationMatrix.hpp; sourceTree = "<group>"; };
+		28C97A531EE40A11006D3C95 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; };
+		28C97A541EE40A11006D3C95 /* Light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Light.hpp; path = ../src/Light.hpp; sourceTree = "<group>"; };
+		28C97A561EE40BFA006D3C95 /* RasMath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasMath.hpp; path = ../src/RasMath.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +103,7 @@
 				2877A8C01EDD441D0026AF21 /* ObjectProperties.hpp */,
 				2877A8C11EDD441D0026AF21 /* RasTransform.cpp */,
 				2877A8C21EDD441D0026AF21 /* RasTransform.hpp */,
+				28C97A561EE40BFA006D3C95 /* RasMath.hpp */,
 				2877A8C31EDD441D0026AF21 /* Renderer.cpp */,
 				2877A8C41EDD441D0026AF21 /* Renderer.hpp */,
 				2877A8C51EDD441D0026AF21 /* Vector.cpp */,
@@ -106,6 +112,8 @@
 				28A42F8C1EE1CDA400921E1A /* EulerAngles.hpp */,
 				28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */,
 				28A42F8F1EE1CDC700921E1A /* RotationMatrix.hpp */,
+				28C97A531EE40A11006D3C95 /* Light.cpp */,
+				28C97A541EE40A11006D3C95 /* Light.hpp */,
 				2877A8B51EDD440E0026AF21 /* src */,
 				283107F21EDC02FC006746EC /* 3DRasEngine */,
 				283107F11EDC02FC006746EC /* Products */,
@@ -184,6 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28C97A551EE40A11006D3C95 /* Light.cpp in Sources */,
 				2877A8C71EDD441D0026AF21 /* BMPManager.cpp in Sources */,
 				2877A8C81EDD441D0026AF21 /* BMPManager.hpp in Sources */,
 				2877A8C91EDD441D0026AF21 /* main.cpp in Sources */,
@@ -191,6 +200,7 @@
 				2877A8CB1EDD441D0026AF21 /* Matrix.hpp in Sources */,
 				2877A8CC1EDD441D0026AF21 /* Mesh.cpp in Sources */,
 				2877A8CD1EDD441D0026AF21 /* Mesh.hpp in Sources */,
+				28C97A571EE40C45006D3C95 /* RasMath.hpp in Sources */,
 				2877A8CE1EDD441D0026AF21 /* Model.cpp in Sources */,
 				2877A8CF1EDD441D0026AF21 /* Model.hpp in Sources */,
 				2877A8D01EDD441D0026AF21 /* ObjectProperties.cpp in Sources */,
