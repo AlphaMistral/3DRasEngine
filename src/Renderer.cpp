@@ -36,12 +36,18 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 
 void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
 {
+	RAS_MATRIX_V = view;
+	RAS_MATRIX_P = proj;
+	RAS_MATRIX_MV = model.worldMat * view;
+	RAS_MATRIX_MVP = RAS_MATRIX_MV * proj;
+	RAS_MATRIX_IT_MV = RAS_MATRIX_MV.InvertTranspose();
     mv = model.worldMat * view;
     mvp = mv * proj;
     nmv = mv.InvertTranspose ();
     light.viewPos = RasTransform :: TransformPoint(light.pos, view);
-    
-    auto VertexShader = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
+	
+	//Currently this is not used. 
+    auto VertexShader1 = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
     {
         outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
         outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);

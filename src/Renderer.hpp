@@ -18,6 +18,7 @@
 #include <limits>
 
 #include "Model.hpp"
+#include "ShaderProperty.hpp"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
     int width, height;
     vector <Vector4> frameBuffer;
     vector <float> depthBuffer;
+	vector <Model> modelList;
     Matrix4x4 proj, view, mv, mvp, nmv;
     Light light;
     
@@ -36,7 +38,14 @@ public:
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
-    
+	void DrawAllModels ();
+	void DrawAllModelsWithSpecifiedShaders ();
+	void GenerateDepthMap ();
+	
+	void SetupProperties ();
+	
+	void AddModel (const Model &mod);
+	
     inline void NDC2Screen (Vector4 &pos);
     
     static inline bool BackFaceCulling (const Vector4 &p0, const Vector4 p1, const Vector4 &p2);

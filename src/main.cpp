@@ -32,5 +32,13 @@ int main ()
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");
     Vector4 point(-10, 30, 30, 1);
     point = RasTransform :: TransformPoint(point, renderer.view);
+	
+	auto TestLambada = [&renderer] () -> float
+	{
+		return renderer.light.pos.x;
+	};
+	
+	cout << TestLambada () << endl;
+	
     return 0;
 }
