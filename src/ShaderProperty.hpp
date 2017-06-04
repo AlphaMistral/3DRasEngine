@@ -33,17 +33,35 @@ static Vector4 WORLD_SPACE_LIGHT_COLOR;
 
 static Vector4 PROJECTION_PARAMS;
 
-auto VertexShader = [] (const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
+struct VertexInput
 {
-    outVertex.pos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MVP);
-    outVertex.viewPos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MV);
-    outVertex.normal = RasTransform :: TransformDir(normal, RAS_MATRIX_IT_MV).Normalize ();
-    outVertex.uv = uv;
+    Vector4 pos;
+    Vector4 normal;
+    Vector4 uv;
+    VertexInput () {}
+    VertexInput (Vector4 p, Vector4 n, Vector4 u)
+    {
+        pos = p;
+        normal = n;
+        uv = u;
+    }
 };
 
-auto VertexShaderDepth = [] (const Vector4 &pos, Vertex &outVertex)
+auto VertexShader = [] (const VertexInput &inVertex) -> Vertex
 {
-    outVertex.pos = RasTransform :: TransformPoint(pos, RAS_MATRIX_MVP);
+    Vertex outVertex;
+    outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
+    outVertex.viewPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MV);
+    outVertex.normal = RasTransform :: TransformDir(inVertex.normal, RAS_MATRIX_IT_MV).Normalize ();
+    outVertex.uv = inVertex.uv;
+    return outVertex;
+};
+
+auto VertexShaderDepth = [] (const VertexInput &inVertex) -> Vertex
+{
+    Vertex outVertex;
+    outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
+    return outVertex;
 };
 
 auto FragmentShaderLambertian = [] (const Vertex &i) -> Vector4
@@ -58,7 +76,7 @@ auto FragmentShaderBlinnPhong = [] (const Vertex &i) -> Vector4
 
 auto FragmentShaderDepth = [] (const Vertex &i) -> Vector4
 {
-    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
+    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * xxx;
     printf("%f\n", depth);
     return Vector4(depth, depth, depth, 1.0f);
 };

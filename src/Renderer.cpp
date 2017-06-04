@@ -12,7 +12,7 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = vector<Vector4> (w * h, {0, 0, 0.34f, 0});
+    frameBuffer = vector<Vector4> (w * h, {0, 0, 0.0f, 0});
     depthBuffer = vector<float> (w * h, numeric_limits<float> :: max ());
 }
 
@@ -34,34 +34,21 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.specularColor = spec;
 }
 
-void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
+void Renderer :: DrawModel(Model &model, function<Vertex(const VertexInput&)> vertexShader, function<Vector4(const Vertex&)> fragmentShader)
 {
 	RAS_MATRIX_V = view;
 	RAS_MATRIX_P = proj;
 	RAS_MATRIX_MV = model.worldMat * view;
 	RAS_MATRIX_MVP = RAS_MATRIX_MV * proj;
-	RAS_MATRIX_IT_MV = RAS_MATRIX_MV.InvertTranspose();
-    mv = model.worldMat * view;
-    mvp = mv * proj;
-    nmv = mv.InvertTranspose ();
+	RAS_MATRIX_IT_MV = RAS_MATRIX_M.InvertTranspose();
     light.viewPos = RasTransform :: TransformPoint(light.pos, view);
-	
-	//Currently this is not used. 
-//    auto VertexShader1 = [this](const Vector4 &pos, const Vector4 &normal, const Vector4 &uv, Vertex &outVertex)
-//    {
-//        outVertex.pos = RasTransform :: TransformPoint(pos, mvp);
-//        outVertex.viewPos = RasTransform :: TransformPoint(pos, mv);
-//        outVertex.normal = RasTransform :: TransformDir(normal, nmv).Normalize ();
-//        outVertex.uv = uv;
-//    };
-	
     for (auto &idx : model.index)
     {
         Vertex outVertex[3];
         bool badTriangle = false;
         for (int i = 0;i < 3;i++)
         {
-            VertexShader (model.vertex[idx.pos[i]], model.normal[idx.normal[i]], model.uv[idx.uv[i]], outVertex[i]);
+			outVertex[i] = VertexShader (VertexInput(model.vertex[idx.pos[i]], model.normal[idx.normal[i]], model.uv[idx.uv[i]]));
             if (outVertex[i].pos.z < 0.0f || outVertex[i].pos.z > 1.0f)
             {
                 badTriangle = true;
@@ -70,8 +57,7 @@ void Renderer :: DrawModel(Model &model, bool drawTex, bool drawWireFrame)
             NDC2Screen (outVertex[i].pos);
         }
         if (badTriangle || BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos))continue;
-        if (drawTex)FillTriangle(model, outVertex[0], outVertex[1], outVertex[2]);
-        if (drawWireFrame)DrawTriangle(outVertex[0], outVertex[1], outVertex[2], {0, 1.0f, 1.0f, 0});
+        FillTriangle(model, outVertex[0], outVertex[1], outVertex[2], fragmentShader);
     }
 }
 
@@ -88,7 +74,7 @@ inline bool Renderer :: BackFaceCulling (const Vector4 &p0, const Vector4 p1, co
     return (p0.Dot ((p1 - p0).Cross (p2 - p0)) >= 0);
 }
 
-void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2)
+void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, function<Vector4(const Vertex&)> fragmentShader)
 {
     auto PixelShader = [&model, this] (Vertex &v) -> Vector4
     {
@@ -118,7 +104,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, FragmentShaderDepth (v), v.pos.z);
+            DrawPoint (x, y, fragmentShader (v), v.pos.z);
         }
     }
 }
@@ -254,7 +240,7 @@ void Renderer :: DrawAllModels()
 	}
 }
 
-void Renderer :: DrawAllModelsWithSpecifiedShaders(function<void(const Vector4&, Vertex&)> vertex, function<Vector4(const Vertex &)> fragment)
+void Renderer :: DrawAllModelsWithSpecifiedShaders(function<void(const VertexInput &)> vertex, function<Vector4(const Vertex &)> fragment)
 {
 	
 }
