@@ -31,7 +31,9 @@ public:
     static Matrix4x4 RAS_MATRIX_MV;
     static Matrix4x4 RAS_MATRIX_MVP;
     static Matrix4x4 RAS_MATRIX_IT_MV;
-    static Vector4 WORLD_SPACE_LIGHT_COLOR;
+    static Vector4 WORLD_SPACE_LIGHT_COLOR_AMB;
+    static Vector4 WORLD_SPACE_LIGHT_COLOR_DIF;
+    static Vector4 WORLD_SPACE_LIGHT_COLOR_SPE;
     
     static Vertex VertexShader(const VertexInput&);
     static Vertex VertexShaderSimple(const VertexInput&);
@@ -39,6 +41,18 @@ public:
     static Vector4 FragmentDepth(const Model&, const Vertex&);
     static Vector4 FragmentLambertian(const Model&, const Vertex&);
     static Vector4 FragmentBlinnPhong(const Model&, const Vertex&);
+    
+    static inline float Saturate (float n);
+    
+    static inline Vector4 TextureLookup (const Texture &texture, float s, float t);
+    
+    static inline Vector4 BilinearFiltering (const Texture &texture, float s, float t);
+    
+    static inline Vector4 LinearFilteringH (const Texture &texture, float s, float t);
+    
+    static inline Vector4 LinearFilteringV (const Texture &texture, float s, float t);
+    
+    static inline Vector4 NearestNeighbor (const Texture &texture, float s, float t);
 };
 
 typedef Vector4 (*FShader) (const Model &, const Vertex &);
