@@ -108,7 +108,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, fShader (model, v), v.pos.z);
+            DrawPoint (x, y, fShader (model.uniform, v), v.pos.z);
         }
     }
 }

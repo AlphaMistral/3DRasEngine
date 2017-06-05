@@ -39,8 +39,10 @@ Vector4 ShaderLab :: FragmentDepth(const Model &model, const Vertex &i)
     return Vector4(depth, depth, depth, 1.0f);
 }
 
-Vector4 ShaderLab :: FragmentBlinnPhong(const Model &model, const Vertex &v)
+Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
 {
+    //const UniformBlinnPhong uniform = static_cast<const UniformBlinnPhong&>(uni);
+    const UniformBlinnPhong *uniform = static_cast<const UniformBlinnPhong*>(uni);
     auto lightView = RasTransform :: TransformPoint(WORLD_SPACE_LIGHT_POS, RAS_MATRIX_V);
     auto ldir = (lightView - v.viewPos).Normalize ();
     auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
@@ -52,7 +54,7 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Model &model, const Vertex &v)
         auto angle = std::max (0.0f, half.Dot (v.normal));
         specular = pow (angle, 16.0f);
     }
-    return (TextureLookup (model.material.texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * model.material.ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * model.material.kd) + WORLD_SPACE_LIGHT_COLOR_SPE * specular * model.material.ks);
+    return (TextureLookup (uniform->texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * uniform->ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * uniform->kd) + WORLD_SPACE_LIGHT_COLOR_SPE * specular * uniform->ks);
 }
 
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)
