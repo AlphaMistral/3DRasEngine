@@ -7,29 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2877A8C71EDD441D0026AF21 /* BMPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8B61EDD441D0026AF21 /* BMPManager.cpp */; };
-		2877A8C81EDD441D0026AF21 /* BMPManager.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8B71EDD441D0026AF21 /* BMPManager.hpp */; };
-		2877A8C91EDD441D0026AF21 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8B81EDD441D0026AF21 /* main.cpp */; };
-		2877A8CA1EDD441D0026AF21 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8B91EDD441D0026AF21 /* Matrix.cpp */; };
-		2877A8CB1EDD441D0026AF21 /* Matrix.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BA1EDD441D0026AF21 /* Matrix.hpp */; };
-		2877A8CC1EDD441D0026AF21 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BB1EDD441D0026AF21 /* Mesh.cpp */; };
-		2877A8CD1EDD441D0026AF21 /* Mesh.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BC1EDD441D0026AF21 /* Mesh.hpp */; };
-		2877A8CE1EDD441D0026AF21 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BD1EDD441D0026AF21 /* Model.cpp */; };
-		2877A8CF1EDD441D0026AF21 /* Model.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BE1EDD441D0026AF21 /* Model.hpp */; };
-		2877A8D01EDD441D0026AF21 /* ObjectProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8BF1EDD441D0026AF21 /* ObjectProperties.cpp */; };
-		2877A8D11EDD441D0026AF21 /* ObjectProperties.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C01EDD441D0026AF21 /* ObjectProperties.hpp */; };
-		2877A8D21EDD441D0026AF21 /* RasTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C11EDD441D0026AF21 /* RasTransform.cpp */; };
-		2877A8D31EDD441D0026AF21 /* RasTransform.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C21EDD441D0026AF21 /* RasTransform.hpp */; };
-		2877A8D41EDD441D0026AF21 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C31EDD441D0026AF21 /* Renderer.cpp */; };
-		2877A8D51EDD441D0026AF21 /* Renderer.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C41EDD441D0026AF21 /* Renderer.hpp */; };
-		2877A8D61EDD441D0026AF21 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C51EDD441D0026AF21 /* Vector.cpp */; };
-		2877A8D71EDD441D0026AF21 /* Vector.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8C61EDD441D0026AF21 /* Vector.hpp */; };
-		2877A8DA1EDDD7220026AF21 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2877A8D81EDDD7220026AF21 /* Quaternion.cpp */; };
-		28A42F8D1EE1CDA400921E1A /* EulerAngles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28A42F8B1EE1CDA400921E1A /* EulerAngles.cpp */; };
-		28A42F901EE1CDC700921E1A /* RotationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */; };
-		28C97A551EE40A11006D3C95 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A531EE40A11006D3C95 /* Light.cpp */; };
-		28C97A571EE40C45006D3C95 /* RasMath.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A561EE40BFA006D3C95 /* RasMath.hpp */; };
-		28C97A7E1EE49B05006D3C95 /* ShaderLab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A7C1EE49B05006D3C95 /* ShaderLab.cpp */; };
+		28C97A9C1EE59031006D3C95 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A7F1EE59031006D3C95 /* main.cpp */; };
+		28C97A9D1EE59031006D3C95 /* EulerAngles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A801EE59031006D3C95 /* EulerAngles.cpp */; };
+		28C97A9E1EE59031006D3C95 /* EulerAngles.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A811EE59031006D3C95 /* EulerAngles.hpp */; };
+		28C97A9F1EE59031006D3C95 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A821EE59031006D3C95 /* Matrix.cpp */; };
+		28C97AA01EE59031006D3C95 /* Matrix.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A831EE59031006D3C95 /* Matrix.hpp */; };
+		28C97AA11EE59031006D3C95 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A841EE59031006D3C95 /* Quaternion.cpp */; };
+		28C97AA31EE59031006D3C95 /* RasMath.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A861EE59031006D3C95 /* RasMath.hpp */; };
+		28C97AA41EE59031006D3C95 /* RotationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A871EE59031006D3C95 /* RotationMatrix.cpp */; };
+		28C97AA61EE59031006D3C95 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A891EE59031006D3C95 /* Vector.cpp */; };
+		28C97AA81EE59031006D3C95 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A8B1EE59031006D3C95 /* Mesh.cpp */; };
+		28C97AAA1EE59031006D3C95 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A8D1EE59031006D3C95 /* Model.cpp */; };
+		28C97AAC1EE59031006D3C95 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A8F1EE59031006D3C95 /* Renderer.cpp */; };
+		28C97AAE1EE59031006D3C95 /* ShaderLab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A911EE59031006D3C95 /* ShaderLab.cpp */; };
+		28C97AB01EE59031006D3C95 /* RasTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A931EE59031006D3C95 /* RasTransform.cpp */; };
+		28C97AB21EE59031006D3C95 /* BMPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A951EE59031006D3C95 /* BMPManager.cpp */; };
+		28C97AB41EE59031006D3C95 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A971EE59031006D3C95 /* Light.cpp */; };
+		28C97AB61EE59031006D3C95 /* ObjectProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A991EE59031006D3C95 /* ObjectProperties.cpp */; };
+		28C97AB81EE59031006D3C95 /* ShaderProperty.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,35 +42,35 @@
 /* Begin PBXFileReference section */
 		283107F01EDC02FC006746EC /* 3DRasEngine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 3DRasEngine; sourceTree = BUILT_PRODUCTS_DIR; };
 		2877A8B51EDD440E0026AF21 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../src; sourceTree = "<group>"; };
-		2877A8B61EDD441D0026AF21 /* BMPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BMPManager.cpp; path = ../src/BMPManager.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8B71EDD441D0026AF21 /* BMPManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BMPManager.hpp; path = ../src/BMPManager.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8B81EDD441D0026AF21 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8B91EDD441D0026AF21 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../src/Matrix.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BA1EDD441D0026AF21 /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Matrix.hpp; path = ../src/Matrix.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BB1EDD441D0026AF21 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/Mesh.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BC1EDD441D0026AF21 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Mesh.hpp; path = ../src/Mesh.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BD1EDD441D0026AF21 /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Model.cpp; path = ../src/Model.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BE1EDD441D0026AF21 /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Model.hpp; path = ../src/Model.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8BF1EDD441D0026AF21 /* ObjectProperties.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectProperties.cpp; path = ../src/ObjectProperties.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C01EDD441D0026AF21 /* ObjectProperties.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ObjectProperties.hpp; path = ../src/ObjectProperties.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C11EDD441D0026AF21 /* RasTransform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RasTransform.cpp; path = ../src/RasTransform.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C21EDD441D0026AF21 /* RasTransform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasTransform.hpp; path = ../src/RasTransform.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C31EDD441D0026AF21 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer.cpp; path = ../src/Renderer.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C41EDD441D0026AF21 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Renderer.hpp; path = ../src/Renderer.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C51EDD441D0026AF21 /* Vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Vector.cpp; path = ../src/Vector.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8C61EDD441D0026AF21 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Vector.hpp; path = ../src/Vector.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8D81EDDD7220026AF21 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quaternion.cpp; path = ../src/Quaternion.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		2877A8D91EDDD7220026AF21 /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Quaternion.hpp; path = ../src/Quaternion.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28A42F8B1EE1CDA400921E1A /* EulerAngles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EulerAngles.cpp; path = ../src/EulerAngles.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		28A42F8C1EE1CDA400921E1A /* EulerAngles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EulerAngles.hpp; path = ../src/EulerAngles.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RotationMatrix.cpp; path = ../src/RotationMatrix.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		28A42F8F1EE1CDC700921E1A /* RotationMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RotationMatrix.hpp; path = ../src/RotationMatrix.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A531EE40A11006D3C95 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A541EE40A11006D3C95 /* Light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Light.hpp; path = ../src/Light.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A561EE40BFA006D3C95 /* RasMath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasMath.hpp; path = ../src/RasMath.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A591EE414AE006D3C95 /* ShaderProperty.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ShaderProperty.hpp; path = ../src/ShaderProperty.hpp; sourceTree = "<group>"; };
-		28C97A7C1EE49B05006D3C95 /* ShaderLab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderLab.cpp; path = ../src/ShaderLab.cpp; sourceTree = "<group>"; };
-		28C97A7D1EE49B05006D3C95 /* ShaderLab.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ShaderLab.hpp; path = ../src/ShaderLab.hpp; sourceTree = "<group>"; };
+		28C97A7F1EE59031006D3C95 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
+		28C97A801EE59031006D3C95 /* EulerAngles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EulerAngles.cpp; path = ../src/Math/EulerAngles.cpp; sourceTree = "<group>"; };
+		28C97A811EE59031006D3C95 /* EulerAngles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EulerAngles.hpp; path = ../src/Math/EulerAngles.hpp; sourceTree = "<group>"; };
+		28C97A821EE59031006D3C95 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../src/Math/Matrix.cpp; sourceTree = "<group>"; };
+		28C97A831EE59031006D3C95 /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Matrix.hpp; path = ../src/Math/Matrix.hpp; sourceTree = "<group>"; };
+		28C97A841EE59031006D3C95 /* Quaternion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Quaternion.cpp; path = ../src/Math/Quaternion.cpp; sourceTree = "<group>"; };
+		28C97A851EE59031006D3C95 /* Quaternion.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Quaternion.hpp; path = ../src/Math/Quaternion.hpp; sourceTree = "<group>"; };
+		28C97A861EE59031006D3C95 /* RasMath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasMath.hpp; path = ../src/Math/RasMath.hpp; sourceTree = "<group>"; };
+		28C97A871EE59031006D3C95 /* RotationMatrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RotationMatrix.cpp; path = ../src/Math/RotationMatrix.cpp; sourceTree = "<group>"; };
+		28C97A881EE59031006D3C95 /* RotationMatrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RotationMatrix.hpp; path = ../src/Math/RotationMatrix.hpp; sourceTree = "<group>"; };
+		28C97A891EE59031006D3C95 /* Vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Vector.cpp; path = ../src/Math/Vector.cpp; sourceTree = "<group>"; };
+		28C97A8A1EE59031006D3C95 /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Vector.hpp; path = ../src/Math/Vector.hpp; sourceTree = "<group>"; };
+		28C97A8B1EE59031006D3C95 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/Model/Mesh.cpp; sourceTree = "<group>"; };
+		28C97A8C1EE59031006D3C95 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Mesh.hpp; path = ../src/Model/Mesh.hpp; sourceTree = "<group>"; };
+		28C97A8D1EE59031006D3C95 /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Model.cpp; path = ../src/Model/Model.cpp; sourceTree = "<group>"; };
+		28C97A8E1EE59031006D3C95 /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Model.hpp; path = ../src/Model/Model.hpp; sourceTree = "<group>"; };
+		28C97A8F1EE59031006D3C95 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer.cpp; path = ../src/Render/Renderer.cpp; sourceTree = "<group>"; };
+		28C97A901EE59031006D3C95 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Renderer.hpp; path = ../src/Render/Renderer.hpp; sourceTree = "<group>"; };
+		28C97A911EE59031006D3C95 /* ShaderLab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderLab.cpp; path = ../src/Render/ShaderLab.cpp; sourceTree = "<group>"; };
+		28C97A921EE59031006D3C95 /* ShaderLab.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ShaderLab.hpp; path = ../src/Render/ShaderLab.hpp; sourceTree = "<group>"; };
+		28C97A931EE59031006D3C95 /* RasTransform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RasTransform.cpp; path = ../src/Trans/RasTransform.cpp; sourceTree = "<group>"; };
+		28C97A941EE59031006D3C95 /* RasTransform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasTransform.hpp; path = ../src/Trans/RasTransform.hpp; sourceTree = "<group>"; };
+		28C97A951EE59031006D3C95 /* BMPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BMPManager.cpp; path = ../src/Util/BMPManager.cpp; sourceTree = "<group>"; };
+		28C97A961EE59031006D3C95 /* BMPManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BMPManager.hpp; path = ../src/Util/BMPManager.hpp; sourceTree = "<group>"; };
+		28C97A971EE59031006D3C95 /* Light.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Util/Light.cpp; sourceTree = "<group>"; };
+		28C97A981EE59031006D3C95 /* Light.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Light.hpp; path = ../src/Util/Light.hpp; sourceTree = "<group>"; };
+		28C97A991EE59031006D3C95 /* ObjectProperties.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectProperties.cpp; path = ../src/Util/ObjectProperties.cpp; sourceTree = "<group>"; };
+		28C97A9A1EE59031006D3C95 /* ObjectProperties.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ObjectProperties.hpp; path = ../src/Util/ObjectProperties.hpp; sourceTree = "<group>"; };
+		28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ShaderProperty.hpp; path = ../src/Util/ShaderProperty.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,35 +87,35 @@
 		283107E71EDC02FC006746EC = {
 			isa = PBXGroup;
 			children = (
-				2877A8D81EDDD7220026AF21 /* Quaternion.cpp */,
-				2877A8D91EDDD7220026AF21 /* Quaternion.hpp */,
-				2877A8B61EDD441D0026AF21 /* BMPManager.cpp */,
-				2877A8B71EDD441D0026AF21 /* BMPManager.hpp */,
-				2877A8B81EDD441D0026AF21 /* main.cpp */,
-				2877A8B91EDD441D0026AF21 /* Matrix.cpp */,
-				2877A8BA1EDD441D0026AF21 /* Matrix.hpp */,
-				2877A8BB1EDD441D0026AF21 /* Mesh.cpp */,
-				2877A8BC1EDD441D0026AF21 /* Mesh.hpp */,
-				2877A8BD1EDD441D0026AF21 /* Model.cpp */,
-				2877A8BE1EDD441D0026AF21 /* Model.hpp */,
-				2877A8BF1EDD441D0026AF21 /* ObjectProperties.cpp */,
-				2877A8C01EDD441D0026AF21 /* ObjectProperties.hpp */,
-				2877A8C11EDD441D0026AF21 /* RasTransform.cpp */,
-				2877A8C21EDD441D0026AF21 /* RasTransform.hpp */,
-				28C97A561EE40BFA006D3C95 /* RasMath.hpp */,
-				2877A8C31EDD441D0026AF21 /* Renderer.cpp */,
-				2877A8C41EDD441D0026AF21 /* Renderer.hpp */,
-				2877A8C51EDD441D0026AF21 /* Vector.cpp */,
-				2877A8C61EDD441D0026AF21 /* Vector.hpp */,
-				28A42F8B1EE1CDA400921E1A /* EulerAngles.cpp */,
-				28A42F8C1EE1CDA400921E1A /* EulerAngles.hpp */,
-				28A42F8E1EE1CDC700921E1A /* RotationMatrix.cpp */,
-				28A42F8F1EE1CDC700921E1A /* RotationMatrix.hpp */,
-				28C97A531EE40A11006D3C95 /* Light.cpp */,
-				28C97A541EE40A11006D3C95 /* Light.hpp */,
-				28C97A591EE414AE006D3C95 /* ShaderProperty.hpp */,
-				28C97A7C1EE49B05006D3C95 /* ShaderLab.cpp */,
-				28C97A7D1EE49B05006D3C95 /* ShaderLab.hpp */,
+				28C97A7F1EE59031006D3C95 /* main.cpp */,
+				28C97A801EE59031006D3C95 /* EulerAngles.cpp */,
+				28C97A811EE59031006D3C95 /* EulerAngles.hpp */,
+				28C97A821EE59031006D3C95 /* Matrix.cpp */,
+				28C97A831EE59031006D3C95 /* Matrix.hpp */,
+				28C97A841EE59031006D3C95 /* Quaternion.cpp */,
+				28C97A851EE59031006D3C95 /* Quaternion.hpp */,
+				28C97A861EE59031006D3C95 /* RasMath.hpp */,
+				28C97A871EE59031006D3C95 /* RotationMatrix.cpp */,
+				28C97A881EE59031006D3C95 /* RotationMatrix.hpp */,
+				28C97A891EE59031006D3C95 /* Vector.cpp */,
+				28C97A8A1EE59031006D3C95 /* Vector.hpp */,
+				28C97A8B1EE59031006D3C95 /* Mesh.cpp */,
+				28C97A8C1EE59031006D3C95 /* Mesh.hpp */,
+				28C97A8D1EE59031006D3C95 /* Model.cpp */,
+				28C97A8E1EE59031006D3C95 /* Model.hpp */,
+				28C97A8F1EE59031006D3C95 /* Renderer.cpp */,
+				28C97A901EE59031006D3C95 /* Renderer.hpp */,
+				28C97A911EE59031006D3C95 /* ShaderLab.cpp */,
+				28C97A921EE59031006D3C95 /* ShaderLab.hpp */,
+				28C97A931EE59031006D3C95 /* RasTransform.cpp */,
+				28C97A941EE59031006D3C95 /* RasTransform.hpp */,
+				28C97A951EE59031006D3C95 /* BMPManager.cpp */,
+				28C97A961EE59031006D3C95 /* BMPManager.hpp */,
+				28C97A971EE59031006D3C95 /* Light.cpp */,
+				28C97A981EE59031006D3C95 /* Light.hpp */,
+				28C97A991EE59031006D3C95 /* ObjectProperties.cpp */,
+				28C97A9A1EE59031006D3C95 /* ObjectProperties.hpp */,
+				28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */,
 				2877A8B51EDD440E0026AF21 /* src */,
 				283107F21EDC02FC006746EC /* 3DRasEngine */,
 				283107F11EDC02FC006746EC /* Products */,
@@ -199,29 +194,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28C97A551EE40A11006D3C95 /* Light.cpp in Sources */,
-				2877A8C71EDD441D0026AF21 /* BMPManager.cpp in Sources */,
-				2877A8C81EDD441D0026AF21 /* BMPManager.hpp in Sources */,
-				2877A8C91EDD441D0026AF21 /* main.cpp in Sources */,
-				2877A8CA1EDD441D0026AF21 /* Matrix.cpp in Sources */,
-				2877A8CB1EDD441D0026AF21 /* Matrix.hpp in Sources */,
-				2877A8CC1EDD441D0026AF21 /* Mesh.cpp in Sources */,
-				2877A8CD1EDD441D0026AF21 /* Mesh.hpp in Sources */,
-				28C97A571EE40C45006D3C95 /* RasMath.hpp in Sources */,
-				2877A8CE1EDD441D0026AF21 /* Model.cpp in Sources */,
-				2877A8CF1EDD441D0026AF21 /* Model.hpp in Sources */,
-				2877A8D01EDD441D0026AF21 /* ObjectProperties.cpp in Sources */,
-				28C97A7E1EE49B05006D3C95 /* ShaderLab.cpp in Sources */,
-				28A42F8D1EE1CDA400921E1A /* EulerAngles.cpp in Sources */,
-				2877A8D11EDD441D0026AF21 /* ObjectProperties.hpp in Sources */,
-				2877A8DA1EDDD7220026AF21 /* Quaternion.cpp in Sources */,
-				2877A8D21EDD441D0026AF21 /* RasTransform.cpp in Sources */,
-				2877A8D31EDD441D0026AF21 /* RasTransform.hpp in Sources */,
-				2877A8D41EDD441D0026AF21 /* Renderer.cpp in Sources */,
-				28A42F901EE1CDC700921E1A /* RotationMatrix.cpp in Sources */,
-				2877A8D51EDD441D0026AF21 /* Renderer.hpp in Sources */,
-				2877A8D61EDD441D0026AF21 /* Vector.cpp in Sources */,
-				2877A8D71EDD441D0026AF21 /* Vector.hpp in Sources */,
+				28C97A9C1EE59031006D3C95 /* main.cpp in Sources */,
+				28C97A9D1EE59031006D3C95 /* EulerAngles.cpp in Sources */,
+				28C97A9E1EE59031006D3C95 /* EulerAngles.hpp in Sources */,
+				28C97A9F1EE59031006D3C95 /* Matrix.cpp in Sources */,
+				28C97AA01EE59031006D3C95 /* Matrix.hpp in Sources */,
+				28C97AA11EE59031006D3C95 /* Quaternion.cpp in Sources */,
+				28C97AA31EE59031006D3C95 /* RasMath.hpp in Sources */,
+				28C97AA41EE59031006D3C95 /* RotationMatrix.cpp in Sources */,
+				28C97AA61EE59031006D3C95 /* Vector.cpp in Sources */,
+				28C97AA81EE59031006D3C95 /* Mesh.cpp in Sources */,
+				28C97AAA1EE59031006D3C95 /* Model.cpp in Sources */,
+				28C97AAC1EE59031006D3C95 /* Renderer.cpp in Sources */,
+				28C97AAE1EE59031006D3C95 /* ShaderLab.cpp in Sources */,
+				28C97AB01EE59031006D3C95 /* RasTransform.cpp in Sources */,
+				28C97AB21EE59031006D3C95 /* BMPManager.cpp in Sources */,
+				28C97AB41EE59031006D3C95 /* Light.cpp in Sources */,
+				28C97AB61EE59031006D3C95 /* ObjectProperties.cpp in Sources */,
+				28C97AB81EE59031006D3C95 /* ShaderProperty.hpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

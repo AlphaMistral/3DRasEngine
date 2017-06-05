@@ -80,21 +80,6 @@ inline bool Renderer :: BackFaceCulling (const Vector4 &p0, const Vector4 p1, co
 
 void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader fShader)
 {
-    auto PixelShader = [&model, this] (Vertex &v) -> Vector4
-    {
-        auto ldir = (light.viewPos - v.viewPos).Normalize ();
-        auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
-        auto specular = 0.0f;
-        if (lambertian > 0)
-        {
-            auto viewDir = (-v.viewPos).Normalize ();
-            auto half = (ldir + viewDir).Normalize ();
-            auto angle = std::max (0.0f, half.Dot (v.normal));
-            specular = pow (angle, 16.0f);
-        }
-        return (TextureLookup (model.material.texture, v.uv.x, v.uv.y) * (light.ambientColor * model.material.ka + light.diffuseColor * lambertian * model.material.kd) + light.specularColor * specular * model.material.ks);
-    };
-    
     Vector4 weight = {0, 0, 0, EdgeFunc (v0.pos, v1.pos, v2.pos)};
     int x0 = std::max (0, (int)floor (std::min (v0.pos.x, std::min (v1.pos.x, v2.pos.x))));
     int y0 = std::max (0, (int)floor (std::min (v0.pos.y, std::min (v1.pos.y, v2.pos.y))));
@@ -108,7 +93,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, fShader (model, v), v.pos.z);
+            DrawPoint (x, y, fShader (model.uniform, v), v.pos.z);
         }
     }
 }

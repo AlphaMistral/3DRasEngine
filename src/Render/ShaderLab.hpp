@@ -16,6 +16,7 @@
 
 #include "RasMath.hpp"
 #include "Model.hpp"
+#include "BMPManager.hpp"
 #include "ShaderProperty.hpp"
 
 class ShaderLab
@@ -39,8 +40,8 @@ public:
     static Vertex VertexShaderSimple(const VertexInput&);
     
     static Vector4 FragmentDepth(const Model&, const Vertex&);
-    static Vector4 FragmentLambertian(const Model&, const Vertex&);
-    static Vector4 FragmentBlinnPhong(const Model&, const Vertex&);
+    static Vector4 FragmentLambertian(const Uniform*, const Vertex&);
+    static Vector4 FragmentBlinnPhong(const Uniform*, const Vertex&);
     
     static inline float Saturate (float n);
     
@@ -55,7 +56,7 @@ public:
     static inline Vector4 NearestNeighbor (const Texture &texture, float s, float t);
 };
 
-typedef Vector4 (*FShader) (const Model &, const Vertex &);
+typedef Vector4 (*FShader) (const Uniform *, const Vertex &);
 typedef Vertex (*VShader) (const VertexInput &);
 
 #endif /* ShaderLab_hpp */

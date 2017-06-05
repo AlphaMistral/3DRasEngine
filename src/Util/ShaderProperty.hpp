@@ -16,6 +16,7 @@
 #include <cmath>
 
 #include "RasTransform.hpp"
+#include "BMPManager.hpp"
 #include "ObjectProperties.hpp"
 
 struct VertexInput
@@ -35,6 +36,7 @@ struct VertexInput
 class Uniform
 {
 public:
+    virtual ~Uniform () {}
 };
 
 class UniformBlinnPhong : public Uniform
@@ -43,6 +45,14 @@ public:
     float ka;
     float kd;
     float ks;
+    Texture texture;
+    UniformBlinnPhong (float a, float d, float s, std::string fileName)
+    {
+        ka = a;
+        kd = d;
+        ks = s;
+        BMPManager :: LoadBMP(texture, fileName);
+    }
 };
 
 #endif /* ShaderProperty_hpp */

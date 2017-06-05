@@ -21,14 +21,15 @@
 
 #include "RasTransform.hpp"
 #include "Mesh.hpp"
-#include "BMPManager.hpp"
+#include "ShaderProperty.hpp"
 
 class Model : public Mesh
 {
 public:
-    Material material;
+    //Material material;
     Matrix4x4 worldMat;
-    Model (std::string name, const Vector4 &pos, Material m);
+	Uniform *uniform;
+    Model (std::string name, const Vector4 &pos);
     void LoadOBJ (std::string name);
 };
 
