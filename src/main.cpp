@@ -10,7 +10,7 @@ int main ()
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
     renderer.SetCamera ({ 0.0f, 3.0f, 5.0f }, { 0.0f, 0.0f, 0.0f });
     renderer.SetLight ({ -10.0f, 30.0f, 30.0f }, { 0.5f, 0.0f, 0.0f, 0 }, { 0.8f, 0.8f, 0.8f, 0 }, { 0.5f, 0.5f, 0.5f, 0 });
-    Vector3 eulerAngles = Vector3(0, acos(-1) / 6, 0);
+    Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
     Model sphere ("res/sphere", { 2.5f, 0.5f, 1.5f }, { 0.1f, 1.0f, 0.5f });
 	VShader xxx = &ShaderLab::VertexShader;

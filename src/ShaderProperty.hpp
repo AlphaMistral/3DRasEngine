@@ -32,12 +32,17 @@ struct VertexInput
     }
 };
 
-Vertex VV (const VertexInput &inVertex);
-
-auto FragmentShaderDepth = [] (const Vertex &i) -> Vector4
+class Uniform
 {
-    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
-    return Vector4(depth, depth, depth, 1.0f);
+public:
+};
+
+class UniformBlinnPhong : public Uniform
+{
+public:
+    float ka;
+    float kd;
+    float ks;
 };
 
 #endif /* ShaderProperty_hpp */

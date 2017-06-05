@@ -41,7 +41,7 @@ Vector4 ShaderLab :: FragmentDepth(const Model &model, const Vertex &i)
 
 Vector4 ShaderLab :: FragmentBlinnPhong(const Model &model, const Vertex &v)
 {
-    auto lightView = RasTransform :: TransformPoint(WORLD_SPACE_LIGHT_POS - v.viewPos, RAS_MATRIX_V);
+    auto lightView = RasTransform :: TransformPoint(WORLD_SPACE_LIGHT_POS, RAS_MATRIX_V);
     auto ldir = (lightView - v.viewPos).Normalize ();
     auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
     auto specular = 0.0f;

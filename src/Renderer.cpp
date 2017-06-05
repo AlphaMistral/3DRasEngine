@@ -32,6 +32,11 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.ambientColor = ambi;
     light.diffuseColor = diff;
     light.specularColor = spec;
+	
+	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
+	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE = light.specularColor;
 }
 
 void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
@@ -40,11 +45,7 @@ void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
 	ShaderLab :: RAS_MATRIX_P = proj;
 	ShaderLab :: RAS_MATRIX_MV = model.worldMat * view;
 	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
-	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_M.InvertTranspose();
-	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
-	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
-	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
-	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE = light.specularColor;
+	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_MV.InvertTranspose();
     for (auto &idx : model.index)
     {
         Vertex outVertex[3];
