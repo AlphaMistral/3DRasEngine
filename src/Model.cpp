@@ -8,16 +8,13 @@
 
 #include "Model.hpp"
 
-Model :: Model (std::string name, const Vector4 &pos, Material m)
+Model :: Model (std::string name, const Vector4 &pos)
 {
-    material = m;
     vertex = std::vector<Vector4> (1, {0});
     normal = std::vector<Vector4> (1, {0});
     uv = std::vector <Vector4> (1, {0});
     worldMat = RasTransform::CreateModelMatrix(pos);
     LoadOBJ(name + ".obj");
-    if (uv.size() > 1)
-        BMPManager::LoadBMP(material.texture, name + ".bmp");
 }
 
 void Model :: LoadOBJ(std::string str)
