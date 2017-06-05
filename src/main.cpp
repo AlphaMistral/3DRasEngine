@@ -8,8 +8,8 @@ int main ()
     Renderer renderer (WIDTH, HEIGHT);
     
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
-    renderer.SetCamera ({ 0.0f, 3.0f, 5.0f }, { 0.0f, 0.0f, 0.0f });
-    renderer.SetLight ({ -10.0f, 30.0f, 30.0f }, { 0.5f, 0.0f, 0.0f, 0 }, { 0.8f, 0.8f, 0.8f, 0 }, { 0.5f, 0.5f, 0.5f, 0 });
+    renderer.SetCamera (Vector4( 0.0f, 3.0f, 5.0f ), Vector4( 0.0f, 0.0f, 0.0f ));
+    renderer.SetLight (Vector4( -10.0f, 30.0f, 30.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
     Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
 	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
 	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
@@ -17,13 +17,13 @@ int main ()
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
 	VShader xxx = &ShaderLab::VertexShader;
 	FShader fff = &ShaderLab::FragmentBlinnPhong;
-    Model sphere ("res/sphere", { 2.5f, 0.5f, 1.5f });
+    Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
 	sphere.uniform = sphereMat;
     renderer.DrawModel (sphere, xxx, fff);
-    Model bunny ("res/bunny", { 0.0f, 0.0f, 0.0f });
+    Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
 	bunny.uniform = bunnyMat;
     renderer.DrawModel (bunny, xxx, fff);
-    Model cube ("res/cube", { -2.0f, 0.0f, 2.0f });
+    Model cube ("res/cube", Vector4( -2.0f, 0.0f, 2.0f ));
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
 	cube.uniform = cubeMat;
     renderer.DrawModel (cube, xxx, fff);

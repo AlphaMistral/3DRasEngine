@@ -1,3 +1,5 @@
-RasEngine: src/main.cpp
 
-	g++ -o RasEngine src/main.cpp src/Math/EulerAngles.cpp src/Math/Matrix.cpp src/Math/Quaternion.cpp src/Math/RasMath.hpp src/Math/RotationMatrix.cpp src/Math/Vector.cpp src/Model/Mesh.cpp src/Model/Model.cpp src/Render/Renderer.cpp src/Render/ShaderLab.cpp src/Trans/RasTransform.cpp src/Util/BMPManager.cpp src/Util/Light.cpp src/Util/ObjectProperties.cpp src/Util/ShaderProperty.hpp -std=c++11 -O2 -Wall
+
+RasEngine : src/main.cpp
+
+	g++ -o RasEngine -I src/Math/ -I src/Model/ -I src/Render/ -I src/Util/ -I src/Trans/ -I src/ src/main.cpp src/Math/EulerAngles.cpp src/Math/Matrix.cpp src/Math/Quaternion.cpp src/Math/RotationMatrix.cpp src/Math/Vector.cpp src/Model/Mesh.cpp src/Model/Model.cpp src/Trans/RasTransform.cpp src/Render/Renderer.cpp src/Render/ShaderLab.cpp src/Util/BMPManager.cpp src/Util/Light.cpp src/Util/ObjectProperties.cpp --std=c++11 -O2 -Wall
