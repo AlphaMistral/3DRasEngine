@@ -29,6 +29,7 @@ public:
     //Material material;
     Matrix4x4 worldMat;
 	Uniform *uniform;
+	Model () {}
     Model (std::string name, const Vector4 &pos);
     void LoadOBJ (std::string name);
 };

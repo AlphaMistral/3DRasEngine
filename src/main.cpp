@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Renderer.hpp"
-#include "ShaderProperty.hpp"
 
 int main ()
 {
@@ -19,14 +18,17 @@ int main ()
 	FShader fff = &ShaderLab::FragmentBlinnPhong;
     Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
 	sphere.uniform = sphereMat;
-    renderer.DrawModel (sphere, xxx, fff);
+	RenderObject sphereRender = RenderObject(sphere, sphereMat);
+    renderer.DrawModel (sphereRender, xxx, fff);
     Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
+	RenderObject bunnyRender = RenderObject(bunny, bunnyMat);
 	bunny.uniform = bunnyMat;
-    renderer.DrawModel (bunny, xxx, fff);
+    renderer.DrawModel (bunnyRender, xxx, fff);
     Model cube ("res/cube", Vector4( -2.0f, 0.0f, 2.0f ));
+	RenderObject cubeRender = RenderObject(cube, cubeMat);
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
 	cube.uniform = cubeMat;
-    renderer.DrawModel (cube, xxx, fff);
+    renderer.DrawModel (cubeRender, xxx, fff);
 	
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");
     return 0;

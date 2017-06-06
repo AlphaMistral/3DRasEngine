@@ -17,9 +17,8 @@
 #include <cmath>
 #include <limits>
 
-#include "Model.hpp"
 #include "ShaderLab.hpp"
-#include "ShaderProperty.hpp"
+#include "RenderObject.hpp"
 
 class Renderer
 {
@@ -38,7 +37,7 @@ public:
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
-	void DrawModel (Model &model, VShader, FShader);
+	void DrawModel (const RenderObject &, VShader, FShader);
 	void DrawAllModels ();
 	void DrawAllModelsWithSpecifiedShaders (VShader, FShader);
 	Texture GenerateDepthMap ();
@@ -51,7 +50,7 @@ public:
     
     static inline bool BackFaceCulling (const Vector4 &p0, const Vector4 p1, const Vector4 &p2);
     
-    void FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader);
+    void FillTriangle (const Uniform *material, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader);
     
     static bool TriangleCheck (const Vertex &v0, const Vertex &v1, const Vertex &v2, Vertex &v, Vector4 &w);
     

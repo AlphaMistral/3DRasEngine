@@ -20,11 +20,13 @@
 		28C97AAA1EE59031006D3C95 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A8D1EE59031006D3C95 /* Model.cpp */; };
 		28C97AAC1EE59031006D3C95 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A8F1EE59031006D3C95 /* Renderer.cpp */; };
 		28C97AAE1EE59031006D3C95 /* ShaderLab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A911EE59031006D3C95 /* ShaderLab.cpp */; };
-		28C97AB01EE59031006D3C95 /* RasTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A931EE59031006D3C95 /* RasTransform.cpp */; };
 		28C97AB21EE59031006D3C95 /* BMPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A951EE59031006D3C95 /* BMPManager.cpp */; };
 		28C97AB41EE59031006D3C95 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A971EE59031006D3C95 /* Light.cpp */; };
 		28C97AB61EE59031006D3C95 /* ObjectProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A991EE59031006D3C95 /* ObjectProperties.cpp */; };
 		28C97AB81EE59031006D3C95 /* ShaderProperty.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */; };
+		28C97ABB1EE662F7006D3C95 /* RenderObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97AB91EE662F7006D3C95 /* RenderObject.cpp */; };
+		28C97AC11EE6674E006D3C95 /* RasTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97ABF1EE6674E006D3C95 /* RasTransform.cpp */; };
+		28C97AC41EE66BEF006D3C95 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97AC21EE66BEF006D3C95 /* Util.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,8 +64,6 @@
 		28C97A901EE59031006D3C95 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Renderer.hpp; path = ../src/Render/Renderer.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A911EE59031006D3C95 /* ShaderLab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderLab.cpp; path = ../src/Render/ShaderLab.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A921EE59031006D3C95 /* ShaderLab.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ShaderLab.hpp; path = ../src/Render/ShaderLab.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A931EE59031006D3C95 /* RasTransform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RasTransform.cpp; path = ../src/Trans/RasTransform.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		28C97A941EE59031006D3C95 /* RasTransform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RasTransform.hpp; path = ../src/Trans/RasTransform.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A951EE59031006D3C95 /* BMPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BMPManager.cpp; path = ../src/Util/BMPManager.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A961EE59031006D3C95 /* BMPManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BMPManager.hpp; path = ../src/Util/BMPManager.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A971EE59031006D3C95 /* Light.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Util/Light.cpp; sourceTree = "<group>"; usesTabs = 1; };
@@ -71,6 +71,12 @@
 		28C97A991EE59031006D3C95 /* ObjectProperties.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectProperties.cpp; path = ../src/Util/ObjectProperties.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A9A1EE59031006D3C95 /* ObjectProperties.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ObjectProperties.hpp; path = ../src/Util/ObjectProperties.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ShaderProperty.hpp; path = ../src/Util/ShaderProperty.hpp; sourceTree = "<group>"; usesTabs = 1; };
+		28C97AB91EE662F7006D3C95 /* RenderObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderObject.cpp; path = ../src/Render/RenderObject.cpp; sourceTree = "<group>"; };
+		28C97ABA1EE662F7006D3C95 /* RenderObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderObject.hpp; path = ../src/Render/RenderObject.hpp; sourceTree = "<group>"; };
+		28C97ABF1EE6674E006D3C95 /* RasTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RasTransform.cpp; path = ../src/Math/RasTransform.cpp; sourceTree = "<group>"; };
+		28C97AC01EE6674E006D3C95 /* RasTransform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RasTransform.hpp; path = ../src/Math/RasTransform.hpp; sourceTree = "<group>"; };
+		28C97AC21EE66BEF006D3C95 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../src/Util/Util.cpp; sourceTree = "<group>"; };
+		28C97AC31EE66BEF006D3C95 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../src/Util/Util.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,8 @@
 		283107E71EDC02FC006746EC = {
 			isa = PBXGroup;
 			children = (
+				28C97AB91EE662F7006D3C95 /* RenderObject.cpp */,
+				28C97ABA1EE662F7006D3C95 /* RenderObject.hpp */,
 				28C97A7F1EE59031006D3C95 /* main.cpp */,
 				28C97A801EE59031006D3C95 /* EulerAngles.cpp */,
 				28C97A811EE59031006D3C95 /* EulerAngles.hpp */,
@@ -105,16 +113,18 @@
 				28C97A8E1EE59031006D3C95 /* Model.hpp */,
 				28C97A8F1EE59031006D3C95 /* Renderer.cpp */,
 				28C97A901EE59031006D3C95 /* Renderer.hpp */,
+				28C97AC21EE66BEF006D3C95 /* Util.cpp */,
+				28C97AC31EE66BEF006D3C95 /* Util.hpp */,
 				28C97A911EE59031006D3C95 /* ShaderLab.cpp */,
 				28C97A921EE59031006D3C95 /* ShaderLab.hpp */,
-				28C97A931EE59031006D3C95 /* RasTransform.cpp */,
-				28C97A941EE59031006D3C95 /* RasTransform.hpp */,
 				28C97A951EE59031006D3C95 /* BMPManager.cpp */,
 				28C97A961EE59031006D3C95 /* BMPManager.hpp */,
 				28C97A971EE59031006D3C95 /* Light.cpp */,
 				28C97A981EE59031006D3C95 /* Light.hpp */,
 				28C97A991EE59031006D3C95 /* ObjectProperties.cpp */,
 				28C97A9A1EE59031006D3C95 /* ObjectProperties.hpp */,
+				28C97ABF1EE6674E006D3C95 /* RasTransform.cpp */,
+				28C97AC01EE6674E006D3C95 /* RasTransform.hpp */,
 				28C97A9B1EE59031006D3C95 /* ShaderProperty.hpp */,
 				2877A8B51EDD440E0026AF21 /* src */,
 				283107F21EDC02FC006746EC /* 3DRasEngine */,
@@ -204,14 +214,16 @@
 				28C97AA41EE59031006D3C95 /* RotationMatrix.cpp in Sources */,
 				28C97AA61EE59031006D3C95 /* Vector.cpp in Sources */,
 				28C97AA81EE59031006D3C95 /* Mesh.cpp in Sources */,
+				28C97ABB1EE662F7006D3C95 /* RenderObject.cpp in Sources */,
 				28C97AAA1EE59031006D3C95 /* Model.cpp in Sources */,
 				28C97AAC1EE59031006D3C95 /* Renderer.cpp in Sources */,
 				28C97AAE1EE59031006D3C95 /* ShaderLab.cpp in Sources */,
-				28C97AB01EE59031006D3C95 /* RasTransform.cpp in Sources */,
 				28C97AB21EE59031006D3C95 /* BMPManager.cpp in Sources */,
 				28C97AB41EE59031006D3C95 /* Light.cpp in Sources */,
 				28C97AB61EE59031006D3C95 /* ObjectProperties.cpp in Sources */,
 				28C97AB81EE59031006D3C95 /* ShaderProperty.hpp in Sources */,
+				28C97AC11EE6674E006D3C95 /* RasTransform.cpp in Sources */,
+				28C97AC41EE66BEF006D3C95 /* Util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

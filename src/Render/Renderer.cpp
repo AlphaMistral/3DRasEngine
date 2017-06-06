@@ -39,20 +39,20 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE = light.specularColor;
 }
 
-void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
+void Renderer :: DrawModel(const RenderObject &ro, VShader vShader, FShader fShader)
 {
     ShaderLab :: RAS_MATRIX_V = view;
 	ShaderLab :: RAS_MATRIX_P = proj;
-	ShaderLab :: RAS_MATRIX_MV = model.worldMat * view;
+	ShaderLab :: RAS_MATRIX_MV = ro.model.worldMat * view;
 	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
 	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_MV.InvertTranspose();
-    for (auto &idx : model.index)
+    for (auto &idx : ro.model.index)
     {
         Vertex outVertex[3];
         bool badTriangle = false;
         for (int i = 0;i < 3;i++)
         {
-			outVertex[i] = vShader (VertexInput(model.vertex[idx.pos[i]], model.normal[idx.normal[i]], model.uv[idx.uv[i]]));
+			outVertex[i] = vShader (VertexInput(ro.model.vertex[idx.pos[i]], ro.model.normal[idx.normal[i]], ro.model.uv[idx.uv[i]]));
             if (outVertex[i].pos.z < 0.0f || outVertex[i].pos.z > 1.0f)
             {
                 badTriangle = true;
@@ -61,7 +61,7 @@ void Renderer :: DrawModel(Model &model, VShader vShader, FShader fShader)
             NDC2Screen (outVertex[i].pos);
         }
         if (badTriangle || BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos))continue;
-        FillTriangle(model, outVertex[0], outVertex[1], outVertex[2], fShader);
+        FillTriangle(ro.material, outVertex[0], outVertex[1], outVertex[2], fShader);
     }
 }
 
@@ -78,7 +78,7 @@ inline bool Renderer :: BackFaceCulling (const Vector4 &p0, const Vector4 p1, co
     return (p0.Dot ((p1 - p0).Cross (p2 - p0)) >= 0);
 }
 
-void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader fShader)
+void Renderer :: FillTriangle (const Uniform *material, const Vertex &v0, const Vertex &v1, const Vertex v2, FShader fShader)
 {
     Vector4 weight = {0, 0, 0, EdgeFunc (v0.pos, v1.pos, v2.pos)};
     int x0 = std::max (0, (int)floor (std::min (v0.pos.x, std::min (v1.pos.x, v2.pos.x))));
@@ -93,7 +93,7 @@ void Renderer :: FillTriangle (Model &model, const Vertex &v0, const Vertex &v1,
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
             if (v.pos.z >= depthBuffer[x + y * width]) continue;
-            DrawPoint (x, y, fShader (model.uniform, v), v.pos.z);
+            DrawPoint (x, y, fShader (material, v), v.pos.z);
         }
     }
 }
@@ -225,7 +225,7 @@ void Renderer :: DrawAllModels()
 {
     for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
-		DrawModel(*i, NULL, NULL);
+		//DrawModel(*i, NULL, NULL);
 	}
 }
 
