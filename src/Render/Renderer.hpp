@@ -38,9 +38,10 @@ public:
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
 	void DrawModel (const RenderObject &, VShader, FShader);
+	void DrawModel (const Model &, const Uniform *);
 	void DrawAllModels ();
 	void DrawAllModelsWithSpecifiedShaders (VShader, FShader);
-	Texture GenerateDepthMap ();
+	Texture GenerateShadowMap (const int, const int);
 	
 	void SetupProperties ();
 	

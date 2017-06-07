@@ -8,7 +8,7 @@ int main ()
     
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
     renderer.SetCamera (Vector4( 0.0f, 3.0f, 5.0f ), Vector4( 0.0f, 0.0f, 0.0f ));
-    renderer.SetLight (Vector4( -10.0f, 30.0f, 30.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
+    renderer.SetLight (Vector4( -10.0f, 300.0f, 30.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
     Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
 	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
 	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
@@ -29,7 +29,7 @@ int main ()
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
 	cube.uniform = cubeMat;
     renderer.DrawModel (cubeRender, xxx, fff);
-	
+	renderer.GenerateShadowMap(1024, 768);
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");
     return 0;
 }

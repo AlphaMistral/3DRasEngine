@@ -33,7 +33,14 @@ Vertex ShaderLab :: VertexShader(const VertexInput &inVertex)
     return outVertex;
 }
 
-Vector4 ShaderLab :: FragmentDepth(const Model &model, const Vertex &i)
+Vertex ShaderLab :: VertexShaderSimple(const VertexInput &inVertex)
+{
+	Vertex outVertex;
+	outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
+	return outVertex;
+}
+
+Vector4 ShaderLab :: FragmentDepth(const Uniform *uni, const Vertex &i)
 {
     float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
     return Vector4(depth, depth, depth, 1.0f);

@@ -33,6 +33,10 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.diffuseColor = diff;
     light.specularColor = spec;
 	
+	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(0.0f, 0.0f, acos(-1) / 6));
+	
+	light.rotMat = RasTransform :: CreateTranslationMatrix(Vector3(pos.x, pos.y, pos.z)) * rotMat;
+	
 	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
@@ -234,8 +238,65 @@ void Renderer :: DrawAllModelsWithSpecifiedShaders(VShader vShader, FShader fSha
 	
 }
 
-Texture Renderer :: GenerateDepthMap()
+///This function now is extremely extremely slow!!!!!!!!!!!
+///To be revised in the later version.
+Texture Renderer :: GenerateShadowMap(const int w, const int h)
 {
-	//DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
-	return Texture();
+	int oldW = width;
+	int oldH = height;
+	Matrix4x4 oldView = view;
+	Matrix4x4 oldProj = proj;
+	std::vector<Vector4> oldFrameBuffer = frameBuffer;
+	printf ("%f\n", depthBuffer[12123]);
+	std::vector<float> oldDepthBuffer = depthBuffer;
+	
+	width = w;
+	height = h;
+	view = light.rotMat;
+	SetFrustum((float)M_PI_2, 1024.0f / 768.0f, 0.01f, 1000.0f);
+	
+	VShader v = &ShaderLab :: VertexShaderSimple;
+	FShader f = &ShaderLab :: FragmentDepth;
+	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
+	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
+	UniformBlinnPhong *cubeMat = new UniformBlinnPhong(0.5f, 0.8f, 0.8f, "res/cube.bmp");
+	Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
+	Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
+	Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
+	sphere.uniform = sphereMat;
+	RenderObject sphereRender = RenderObject(sphere, sphereMat);
+	DrawModel (sphereRender, v, f);
+	Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
+	RenderObject bunnyRender = RenderObject(bunny, bunnyMat);
+	bunny.uniform = bunnyMat;
+	DrawModel (bunnyRender, v, f);
+	Model cube ("res/cube", Vector4( -2.0f, 0.0f, 2.0f ));
+	RenderObject cubeRender = RenderObject(cube, cubeMat);
+	RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
+	cube.uniform = cubeMat;
+	DrawModel (cubeRender, v, f);
+	//DrawAllModelsWithSpecifiedShaders(v, f);
+	
+	Texture shadowMap;
+	shadowMap.width = w;
+	shadowMap.height = h;
+	shadowMap.data.resize(w * h);
+	for (int i = 0;i < w;i++)
+	{
+		for (int j = 0;j < h;j++)
+		{
+			shadowMap.data[i + j * w] = Vector4(depthBuffer[i + j * w], depthBuffer[i + j * w], depthBuffer[i + j * w], 1.0f);
+			if (shadowMap.data[i + j * w].x != 340282346638528859811704183484516925440.0f)
+			printf ("%f\n", shadowMap.data[i + j * w].x);
+		}
+	}
+	
+	width = oldW;
+	height = oldH;
+	view = oldView;
+	proj = oldProj;
+	frameBuffer = oldFrameBuffer;
+	depthBuffer = oldDepthBuffer;
+	
+	return shadowMap;
 }
