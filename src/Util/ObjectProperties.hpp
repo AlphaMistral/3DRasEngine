@@ -17,7 +17,7 @@
 
 #include "RasMath.hpp"
 
-struct Vertex { Vector4 pos, uv, normal, viewPos, color; };
+struct Vertex { Vector4 pos, uv, normal, viewPos, color, worldPos; };
 struct Index { int pos[3], uv[3], normal[3]; };
 struct Texture { int width, height; float smax, tmax; std::vector<Vector4> data; };
 //struct Material { float ka, kd, ks; Texture texture; };

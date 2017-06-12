@@ -33,7 +33,7 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.diffuseColor = diff;
     light.specularColor = spec;
 	
-	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(0.0f, 0.0f, acos(-1) / 6));
+	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(0.0, 0.0f, 0.0f));
 	
 	light.rotMat = RasTransform :: CreateTranslationMatrix(Vector3(pos.x, pos.y, pos.z)) * rotMat;
 	
@@ -45,6 +45,7 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 
 void Renderer :: DrawModel(const RenderObject &ro, VShader vShader, FShader fShader)
 {
+	ShaderLab :: RAS_MATRIX_M = ro.model.worldMat;
     ShaderLab :: RAS_MATRIX_V = view;
 	ShaderLab :: RAS_MATRIX_P = proj;
 	ShaderLab :: RAS_MATRIX_MV = ro.model.worldMat * view;
@@ -122,6 +123,7 @@ inline void Renderer :: Interpolate (const Vertex &v0, const Vertex &v1, const V
     v.normal = (v0.normal * w.x + v1.normal * w.y + v2.normal * w.z) * v.pos.z;
     v.color = (v0.color * w.x + v1.color * w.y + v2.color * w.z) * v.pos.z;
     v.uv = (v0.uv * w.x + v1.uv * w.y + v2.uv * w.z) * v.pos.z;
+	v.worldPos = (v0.worldPos * w.x + v1.worldPos * w.y + v2.worldPos * w.z) * v.pos.z;
 }
 
 inline Vector4 Renderer :: TextureLookup (const Texture &texture, float s, float t)
@@ -220,14 +222,14 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
     }
 }
 
-void Renderer :: AddModel(const Model &mod)
+void Renderer :: AddModel(const RenderObject &mod)
 {
 	modelList.push_back(mod);
 }
 
 void Renderer :: DrawAllModels()
 {
-    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+    for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
 		//DrawModel(*i, NULL, NULL);
 	}
@@ -235,47 +237,34 @@ void Renderer :: DrawAllModels()
 
 void Renderer :: DrawAllModelsWithSpecifiedShaders(VShader vShader, FShader fShader)
 {
-	
+	for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
+	{
+		DrawModel(*i, vShader, fShader);
+	}
 }
 
 ///This function now is extremely extremely slow!!!!!!!!!!!
 ///To be revised in the later version.
-Texture Renderer :: GenerateShadowMap(const int w, const int h)
+void Renderer :: GenerateShadowMap(const int w, const int h)
 {
 	int oldW = width;
 	int oldH = height;
 	Matrix4x4 oldView = view;
 	Matrix4x4 oldProj = proj;
 	std::vector<Vector4> oldFrameBuffer = frameBuffer;
-	printf ("%f\n", depthBuffer[12123]);
 	std::vector<float> oldDepthBuffer = depthBuffer;
 	
 	width = w;
 	height = h;
 	view = light.rotMat;
-	SetFrustum((float)M_PI_2, 1024.0f / 768.0f, 0.01f, 1000.0f);
+	SetFrustum((float)M_PI_2, w * 1.0 / h, 0.01f, 1000.0f);
+	
+	ShaderLab :: WORLD_SPACE_LIGHT_VP = view * proj;
 	
 	VShader v = &ShaderLab :: VertexShaderSimple;
 	FShader f = &ShaderLab :: FragmentDepth;
-	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
-	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
-	UniformBlinnPhong *cubeMat = new UniformBlinnPhong(0.5f, 0.8f, 0.8f, "res/cube.bmp");
-	Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
-	Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
-	Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
-	sphere.uniform = sphereMat;
-	RenderObject sphereRender = RenderObject(sphere, sphereMat);
-	DrawModel (sphereRender, v, f);
-	Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
-	RenderObject bunnyRender = RenderObject(bunny, bunnyMat);
-	bunny.uniform = bunnyMat;
-	DrawModel (bunnyRender, v, f);
-	Model cube ("res/cube", Vector4( -2.0f, 0.0f, 2.0f ));
-	RenderObject cubeRender = RenderObject(cube, cubeMat);
-	RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
-	cube.uniform = cubeMat;
-	DrawModel (cubeRender, v, f);
-	//DrawAllModelsWithSpecifiedShaders(v, f);
+	
+	DrawAllModelsWithSpecifiedShaders(v, f);
 	
 	Texture shadowMap;
 	shadowMap.width = w;
@@ -285,8 +274,15 @@ Texture Renderer :: GenerateShadowMap(const int w, const int h)
 	{
 		for (int j = 0;j < h;j++)
 		{
-			shadowMap.data[i + j * w] = Vector4(depthBuffer[i + j * w], depthBuffer[i + j * w], depthBuffer[i + j * w], 1.0f);
-			if (shadowMap.data[i + j * w].x != 340282346638528859811704183484516925440.0f)
+			float d = depthBuffer[i + j * w];
+			float value = -(1000 + 0.1) / (1000 - 0.1) + (2 * 1000 * 0.1) / (1000 - 0.1) * d;
+			if (value >= 1)
+				value = 1;
+			else if (value <= -1)
+				value = -1;
+			shadowMap.data[i + j * w] = Vector4(value, value, value, 1.0f);
+			///This part ... is ... ummmmmmmm well ... whatever u think man.
+			if (false && shadowMap.data[i + j * w].x != std::numeric_limits<float>::max())
 			printf ("%f\n", shadowMap.data[i + j * w].x);
 		}
 	}
@@ -298,5 +294,6 @@ Texture Renderer :: GenerateShadowMap(const int w, const int h)
 	frameBuffer = oldFrameBuffer;
 	depthBuffer = oldDepthBuffer;
 	
-	return shadowMap;
+	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
+	BMPManager::SaveBMP (frameBuffer, w, h, "123.bmp");
 }

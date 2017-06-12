@@ -20,6 +20,9 @@ Matrix4x4 ShaderLab :: RAS_MATRIX_IT_MV;
 Vector4 ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB;
 Vector4 ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF;
 Vector4 ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE;
+Matrix4x4 ShaderLab :: WORLD_SPACE_LIGHT_V;
+Matrix4x4 ShaderLab :: WORLD_SPACE_LIGHT_VP;
+Texture ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP;
 
 static Vector4 PROJECTION_PARAMS;
 
@@ -27,6 +30,7 @@ Vertex ShaderLab :: VertexShader(const VertexInput &inVertex)
 {
     Vertex outVertex;
     outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
+	outVertex.worldPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_M);
     outVertex.viewPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MV);
     outVertex.normal = RasTransform :: TransformDir(inVertex.normal, RAS_MATRIX_IT_MV).Normalize ();
     outVertex.uv = inVertex.uv;
@@ -54,6 +58,8 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
     auto ldir = (lightView - v.viewPos).Normalize ();
     auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
     auto specular = 0.0f;
+	float value = (RasTransform :: TransformPoint(v.worldPos, WORLD_SPACE_LIGHT_VP)).x;
+	printf("%f\n", value);
     if (lambertian > 0)
     {
         auto viewDir = (-v.viewPos).Normalize ();
