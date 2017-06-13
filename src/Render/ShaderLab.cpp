@@ -30,7 +30,7 @@ Vertex ShaderLab :: VertexShader(const VertexInput &inVertex)
 {
     Vertex outVertex;
     outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
-	outVertex.worldPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_M);
+	outVertex.worldPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_M * WORLD_SPACE_LIGHT_VP);
     outVertex.viewPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MV);
     outVertex.normal = RasTransform :: TransformDir(inVertex.normal, RAS_MATRIX_IT_MV).Normalize ();
     outVertex.uv = inVertex.uv;
@@ -52,20 +52,27 @@ Vector4 ShaderLab :: FragmentDepth(const Uniform *uni, const Vertex &i)
 
 Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
 {
-    //const UniformBlinnPhong uniform = static_cast<const UniformBlinnPhong&>(uni);
     const UniformBlinnPhong *uniform = static_cast<const UniformBlinnPhong*>(uni);
     auto lightView = RasTransform :: TransformPoint(WORLD_SPACE_LIGHT_POS, RAS_MATRIX_V);
     auto ldir = (lightView - v.viewPos).Normalize ();
     auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
     auto specular = 0.0f;
-    if (lambertian > 0)
+	float shadowed = 0;
+	float projX, projY, projZ;
+	projX = v.worldPos.x * 0.5 + 0.5;
+	projY = v.worldPos.y * 0.5 + 0.5;
+	projZ = v.worldPos.z * 0.5 + 0.5;
+	float result = TextureLookup(WORLD_SPACE_LIGHT_SHADOWMAP, projX, projY).x;
+	if (result + 0.0001 > projZ)
+		shadowed = 1;
+    if (lambertian > 1)
     {
         auto viewDir = (-v.viewPos).Normalize ();
         auto half = (ldir + viewDir).Normalize ();
         auto angle = std::max (0.0f, half.Dot (v.normal));
         specular = pow (angle, 16.0f);
     }
-    return (TextureLookup (uniform->texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * uniform->ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * uniform->kd) + WORLD_SPACE_LIGHT_COLOR_SPE * specular * uniform->ks);
+    return (TextureLookup (uniform->texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * uniform->ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * uniform->kd * shadowed) + WORLD_SPACE_LIGHT_COLOR_SPE * shadowed * specular * uniform->ks);
 }
 
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)

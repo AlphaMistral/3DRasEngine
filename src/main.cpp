@@ -3,7 +3,7 @@
 
 int main ()
 {
-    const int WIDTH = 1024, HEIGHT = 768;
+    const int WIDTH = 1024 * 2, HEIGHT = 768 * 2;
     Renderer renderer (WIDTH, HEIGHT);
     
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
@@ -16,7 +16,7 @@ int main ()
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
 	VShader xxx = &ShaderLab::VertexShader;
 	FShader fff = &ShaderLab::FragmentBlinnPhong;
-    Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
+    Model sphere ("res/sphere", Vector4( -2.0f, 3.5f, 4.5f ));
 	sphere.uniform = sphereMat;
 	RenderObject sphereRender = RenderObject(sphere, sphereMat);
     Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
@@ -29,7 +29,7 @@ int main ()
 	renderer.AddModel(sphereRender);
 	renderer.AddModel(bunnyRender);
 	renderer.AddModel(cubeRender);
-	renderer.GenerateShadowMap(1024, 768);
+	renderer.GenerateShadowMap(1024 * 2, 768 * 2);
 	//renderer.DrawModel (cubeRender, xxx, fff);
 	//renderer.DrawModel (bunnyRender, xxx, fff);
 	//renderer.DrawModel (sphereRender, xxx, fff);
