@@ -12,7 +12,7 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = std::vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
+    frameBuffer = std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
     depthBuffer = std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
@@ -33,10 +33,14 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.diffuseColor = diff;
     light.specularColor = spec;
 	
-	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(0.0, 0.0f, 0.0f));
+	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(-acos(-1) / 3, acos(-1) / 1, 0.0f));
+	
+	rotMat = RasTransform :: CreateViewMatrix(light.pos, Vector4(0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f));
 	
 	light.rotMat = RasTransform :: CreateTranslationMatrix(Vector3(pos.x, pos.y, pos.z)) * rotMat;
 	
+	light.rotMat = rotMat;
+
 	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
@@ -257,11 +261,10 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	width = w;
 	height = h;
 	view = light.rotMat;
-	SetFrustum((float)M_PI_2, w * 1.0 / h, 0.01f, 1000.0f);
-	
+	SetFrustum((float)M_PI_2, w * 1.0 / h, 0.1f, 1000.0f);
 	ShaderLab :: WORLD_SPACE_LIGHT_VP = view * proj;
 	
-	VShader v = &ShaderLab :: VertexShaderSimple;
+	VShader v = &ShaderLab :: VertexShader;
 	FShader f = &ShaderLab :: FragmentDepth;
 	
 	DrawAllModelsWithSpecifiedShaders(v, f);
@@ -274,16 +277,13 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	{
 		for (int j = 0;j < h;j++)
 		{
-			float d = depthBuffer[i + j * w];
-			float value = -(1000 + 0.1) / (1000 - 0.1) + (2 * 1000 * 0.1) / (1000 - 0.1) * d;
-			if (value >= 1)
-				value = 1;
-			else if (value <= -1)
-				value = -1;
+			float d = frameBuffer[i + j * w].x;
+			if (d == 1)
+				d = 1000;
+			float value = -(1000 + 0.1) / (1000 - 0.1) + (2 * 1000 * 0.1) / (1000 - 0.1) / d;
+			value = (value + 1) / 2;
+			value = 1 - value;
 			shadowMap.data[i + j * w] = Vector4(value, value, value, 1.0f);
-			///This part ... is ... ummmmmmmm well ... whatever u think man.
-			if (false && shadowMap.data[i + j * w].x != std::numeric_limits<float>::max())
-			printf ("%f\n", shadowMap.data[i + j * w].x);
 		}
 	}
 	
@@ -295,5 +295,5 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	depthBuffer = oldDepthBuffer;
 	
 	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
-	BMPManager::SaveBMP (frameBuffer, w, h, "123.bmp");
+	BMPManager::SaveBMP (shadowMap.data, w, h, "123.bmp");
 }

@@ -46,7 +46,7 @@ Vertex ShaderLab :: VertexShaderSimple(const VertexInput &inVertex)
 
 Vector4 ShaderLab :: FragmentDepth(const Uniform *uni, const Vertex &i)
 {
-    float depth = (i.pos.z - 0.1) / (1000 - 0.1) * 100;
+	float depth = i.pos.z;
     return Vector4(depth, depth, depth, 1.0f);
 }
 
@@ -58,8 +58,6 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
     auto ldir = (lightView - v.viewPos).Normalize ();
     auto lambertian = std::max (0.0f, ldir.Dot (v.normal));
     auto specular = 0.0f;
-	float value = (RasTransform :: TransformPoint(v.worldPos, WORLD_SPACE_LIGHT_VP)).x;
-	printf("%f\n", value);
     if (lambertian > 0)
     {
         auto viewDir = (-v.viewPos).Normalize ();
