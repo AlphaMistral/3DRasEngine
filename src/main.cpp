@@ -3,12 +3,12 @@
 
 int main ()
 {
-    const int WIDTH = 1024, HEIGHT = 768;
+    const int WIDTH = 1024 * 2, HEIGHT = 768 * 2;
     Renderer renderer (WIDTH, HEIGHT);
     
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
     renderer.SetCamera (Vector4( 0.0f, 3.0f, 5.0f ), Vector4( 0.0f, 0.0f, 0.0f ));
-    renderer.SetLight (Vector4( -10.0f, 30.0f, 30.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
+    renderer.SetLight (Vector4( -2.0f, 6.0f, 6.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
     Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
 	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
 	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
@@ -16,20 +16,24 @@ int main ()
     Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
 	VShader xxx = &ShaderLab::VertexShader;
 	FShader fff = &ShaderLab::FragmentBlinnPhong;
-    Model sphere ("res/sphere", Vector4( 2.5f, 0.5f, 1.5f ));
+    Model sphere ("res/sphere", Vector4( -2.0f, 3.5f, 4.5f ));
 	sphere.uniform = sphereMat;
 	RenderObject sphereRender = RenderObject(sphere, sphereMat);
-    renderer.DrawModel (sphereRender, xxx, fff);
     Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
 	RenderObject bunnyRender = RenderObject(bunny, bunnyMat);
 	bunny.uniform = bunnyMat;
-    renderer.DrawModel (bunnyRender, xxx, fff);
     Model cube ("res/cube", Vector4( -2.0f, 0.0f, 2.0f ));
 	RenderObject cubeRender = RenderObject(cube, cubeMat);
     RasTransform :: RotateMatrixByQuaternion(cube.worldMat, q);
 	cube.uniform = cubeMat;
-    renderer.DrawModel (cubeRender, xxx, fff);
-	
+	renderer.AddModel(sphereRender);
+	renderer.AddModel(bunnyRender);
+	renderer.AddModel(cubeRender);
+	renderer.GenerateShadowMap(1024 * 2, 768 * 2);
+	//renderer.DrawModel (cubeRender, xxx, fff);
+	//renderer.DrawModel (bunnyRender, xxx, fff);
+	//renderer.DrawModel (sphereRender, xxx, fff);
+	renderer.DrawAllModelsWithSpecifiedShaders(xxx, fff);
     BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "momo.bmp");
     return 0;
 }

@@ -12,7 +12,7 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = std::vector<Vector4> (w * h, {1.0f / 256 * 195, 1.0f / 256 * 240, 1.0f / 256 * 240, 0});
+    frameBuffer = std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
     depthBuffer = std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
@@ -33,6 +33,14 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
     light.diffuseColor = diff;
     light.specularColor = spec;
 	
+	Matrix4x4 rotMat = RasTransform :: CreateRotationMatrixFromEulerAngles(Vector3(-acos(-1) / 3, acos(-1) / 1, 0.0f));
+	
+	rotMat = RasTransform :: CreateViewMatrix(light.pos, Vector4(0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f));
+	
+	light.rotMat = RasTransform :: CreateTranslationMatrix(Vector3(pos.x, pos.y, pos.z)) * rotMat;
+	
+	light.rotMat = rotMat;
+
 	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_AMB = light.ambientColor;
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_DIF = light.diffuseColor;
@@ -41,6 +49,7 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 
 void Renderer :: DrawModel(const RenderObject &ro, VShader vShader, FShader fShader)
 {
+	ShaderLab :: RAS_MATRIX_M = ro.model.worldMat;
     ShaderLab :: RAS_MATRIX_V = view;
 	ShaderLab :: RAS_MATRIX_P = proj;
 	ShaderLab :: RAS_MATRIX_MV = ro.model.worldMat * view;
@@ -118,6 +127,7 @@ inline void Renderer :: Interpolate (const Vertex &v0, const Vertex &v1, const V
     v.normal = (v0.normal * w.x + v1.normal * w.y + v2.normal * w.z) * v.pos.z;
     v.color = (v0.color * w.x + v1.color * w.y + v2.color * w.z) * v.pos.z;
     v.uv = (v0.uv * w.x + v1.uv * w.y + v2.uv * w.z) * v.pos.z;
+	v.worldPos = (v0.worldPos * w.x + v1.worldPos * w.y + v2.worldPos * w.z) * v.pos.z;
 }
 
 inline Vector4 Renderer :: TextureLookup (const Texture &texture, float s, float t)
@@ -216,14 +226,14 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
     }
 }
 
-void Renderer :: AddModel(const Model &mod)
+void Renderer :: AddModel(const RenderObject &mod)
 {
 	modelList.push_back(mod);
 }
 
 void Renderer :: DrawAllModels()
 {
-    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+    for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
 		//DrawModel(*i, NULL, NULL);
 	}
@@ -231,11 +241,59 @@ void Renderer :: DrawAllModels()
 
 void Renderer :: DrawAllModelsWithSpecifiedShaders(VShader vShader, FShader fShader)
 {
-	
+	for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
+	{
+		DrawModel(*i, vShader, fShader);
+	}
 }
 
-Texture Renderer :: GenerateDepthMap()
+///This function now is extremely extremely slow!!!!!!!!!!!
+///To be revised in the later version.
+void Renderer :: GenerateShadowMap(const int w, const int h)
 {
-	//DrawAllModelsWithSpecifiedShaders(VertexShaderDepth, FragmentShaderDepth);
-	return Texture();
+	int oldW = width;
+	int oldH = height;
+	Matrix4x4 oldView = view;
+	Matrix4x4 oldProj = proj;
+	std::vector<Vector4> oldFrameBuffer = frameBuffer;
+	std::vector<float> oldDepthBuffer = depthBuffer;
+	
+	width = w;
+	height = h;
+	view = light.rotMat;
+	SetFrustum((float)M_PI_2, w * 1.0 / h, 0.1f, 1000.0f);
+	ShaderLab :: WORLD_SPACE_LIGHT_VP = view * proj;
+	
+	VShader v = &ShaderLab :: VertexShader;
+	FShader f = &ShaderLab :: FragmentDepth;
+	
+	DrawAllModelsWithSpecifiedShaders(v, f);
+	
+	Texture shadowMap;
+	shadowMap.width = w;
+	shadowMap.height = h;
+	shadowMap.data.resize(w * h);
+	for (int i = 0;i < w;i++)
+	{
+		for (int j = 0;j < h;j++)
+		{
+			float d = frameBuffer[i + j * w].x;
+			if (d == 1)
+				d = 1000;
+			float value = -(1000 + 0.1) / (1000 - 0.1) + (2 * 1000 * 0.1) / (1000 - 0.1) / d;
+			value = (value + 1) / 2;
+			value = 1 - value;
+			shadowMap.data[i + j * w] = Vector4(value, value, value, 1.0f);
+		}
+	}
+	
+	width = oldW;
+	height = oldH;
+	view = oldView;
+	proj = oldProj;
+	frameBuffer = oldFrameBuffer;
+	depthBuffer = oldDepthBuffer;
+	
+	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
+	BMPManager::SaveBMP (shadowMap.data, w, h, "123.bmp");
 }

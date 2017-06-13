@@ -35,11 +35,14 @@ public:
     static Vector4 WORLD_SPACE_LIGHT_COLOR_AMB;
     static Vector4 WORLD_SPACE_LIGHT_COLOR_DIF;
     static Vector4 WORLD_SPACE_LIGHT_COLOR_SPE;
+	static Matrix4x4 WORLD_SPACE_LIGHT_V;
+	static Matrix4x4 WORLD_SPACE_LIGHT_VP;
+	static Texture WORLD_SPACE_LIGHT_SHADOWMAP;
     
     static Vertex VertexShader(const VertexInput&);
     static Vertex VertexShaderSimple(const VertexInput&);
     
-    static Vector4 FragmentDepth(const Model&, const Vertex&);
+    static Vector4 FragmentDepth(const Uniform*, const Vertex&);
     static Vector4 FragmentLambertian(const Uniform*, const Vertex&);
     static Vector4 FragmentBlinnPhong(const Uniform*, const Vertex&);
     
