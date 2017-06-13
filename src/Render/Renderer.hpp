@@ -24,6 +24,7 @@ class Renderer
 {
 public:
     int width, height;
+	float near, far, fov;
     std::vector <Vector4> frameBuffer;
     std::vector <float> depthBuffer;
     std::vector <RenderObject> modelList;

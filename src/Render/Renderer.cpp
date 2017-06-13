@@ -18,6 +18,9 @@ Renderer :: Renderer (int w, int h)
 
 void Renderer :: SetFrustum (float fov, float aspr, float np, float fp)
 {
+	this->fov = fov;
+	near = np;
+	far = fp;
     proj = RasTransform :: CreateProjectionMatrix (fov, aspr, np, fp);
 }
 
@@ -261,7 +264,7 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	width = w;
 	height = h;
 	view = light.rotMat;
-	SetFrustum((float)M_PI_2, w * 1.0 / h, 0.1f, 1000.0f);
+	SetFrustum((float)M_PI_2, w * 1.0 / h, near, far);
 	ShaderLab :: WORLD_SPACE_LIGHT_VP = view * proj;
 	
 	VShader v = &ShaderLab :: VertexShader;
@@ -279,8 +282,8 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 		{
 			float d = frameBuffer[i + j * w].x;
 			if (d == 1)
-				d = 1000;
-			float value = -(1000 + 0.1) / (1000 - 0.1) + (2 * 1000 * 0.1) / (1000 - 0.1) / d;
+				d = far;
+			float value = -(far + near) / (far - near) + (2 * far * near) / (far - near) / d;
 			value = (value + 1) / 2;
 			value = 1 - value;
 			shadowMap.data[i + j * w] = Vector4(value, value, value, 1.0f);
