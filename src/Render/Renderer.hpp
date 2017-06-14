@@ -18,15 +18,16 @@
 #include <limits>
 
 #include "ShaderLab.hpp"
-#include "RenderObject.hpp"
+#include "Material.hpp"
 
 class Renderer
 {
 public:
     int width, height;
+	float near, far, fov;
     std::vector <Vector4> frameBuffer;
     std::vector <float> depthBuffer;
-    std::vector <RenderObject> modelList;
+    std::vector <Model> modelList;
     Matrix4x4 proj, view, mv, mvp, nmv;
     Light light;
 	ShaderLab shaderLab;
@@ -37,15 +38,15 @@ public:
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
     //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
-	void DrawModel (const RenderObject &, VShader, FShader);
+	void DrawModel (const Model &, const Material &);
 	void DrawModel (const Model &, const Uniform *);
 	void DrawAllModels ();
-	void DrawAllModelsWithSpecifiedShaders (VShader, FShader);
+	void DrawAllModelsWithSpecifiedMaterial (const Material &);
 	void GenerateShadowMap (const int, const int);
 	
 	void SetupProperties ();
 	
-	void AddModel (const RenderObject &mod);
+	void AddModel (const Model &mod);
 	
     inline void NDC2Screen (Vector4 &pos);
     
