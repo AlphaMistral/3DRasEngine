@@ -14,6 +14,17 @@ Matrix4x4 :: Matrix4x4 ()
     m[0][0] = m[1][1] = m[2][2] = m[3][3] = 1.0f;
 }
 
+Matrix4x4 :: Matrix4x4 (const Matrix4x4 &mat)
+{
+	for (int i = 0;i < 4;i++)
+	{
+		for (int j = 0;j < 4;j++)
+		{
+			m[i][j] = mat.m[i][j];
+		}
+	}
+}
+
 Matrix4x4 Matrix4x4 :: operator * (const Matrix4x4 &rhs) const
 {
     Matrix4x4 temp;

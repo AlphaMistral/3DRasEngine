@@ -12,21 +12,38 @@ Renderer :: Renderer (int w, int h)
 {
     width = w;
     height = h;
-    frameBuffer = std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
-    depthBuffer = std::vector<float> (w * h, std::numeric_limits<float> :: max ());
+    modelList = new std::vector<Model> ();
+    frameBuffer = new std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
+    depthBuffer = new std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
-void Renderer :: SetFrustum (float fov, float aspr, float np, float fp)
+Renderer :: ~Renderer ()
 {
-	this->fov = fov;
+	delete proj;
+	delete view;
+	delete mv;
+	delete mvp;
+	delete nmv;
+	delete modelList;
+	delete frameBuffer;
+	delete depthBuffer;
+}
+
+void Renderer :: SetFrustum (float f, float aspr, float np, float fp)
+{
+	if (proj != NULL)
+		delete proj;
+	fov = f;
 	near = np;
 	far = fp;
-    proj = RasTransform :: CreateProjectionMatrix (fov, aspr, np, fp);
+    proj = new Matrix4x4(RasTransform :: CreateProjectionMatrix (f, aspr, np, fp));
 }
 
 void Renderer :: SetCamera (const Vector4 &look, const Vector4 &at)
 {
-    view = RasTransform :: CreateViewMatrix(look, at, {0.0f, 1.0f, 0.0f});
+	if (view != NULL)
+		delete view;
+    view = new Matrix4x4(RasTransform :: CreateViewMatrix(look, at, {0.0f, 1.0f, 0.0f}));
 }
 
 void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec)
@@ -53,10 +70,10 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 void Renderer :: DrawModel(const Model &mod, const Material &mat)
 {
 	ShaderLab :: RAS_MATRIX_M = mod.worldMat;
-    ShaderLab :: RAS_MATRIX_V = view;
-	ShaderLab :: RAS_MATRIX_P = proj;
-	ShaderLab :: RAS_MATRIX_MV = mod.worldMat * view;
-	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
+    ShaderLab :: RAS_MATRIX_V = *view;
+	ShaderLab :: RAS_MATRIX_P = *proj;
+	ShaderLab :: RAS_MATRIX_MV = (mod.worldMat) * (*view);
+	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * *proj;
 	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_MV.InvertTranspose();
     for (auto &idx : mod.index)
     {
@@ -104,7 +121,7 @@ void Renderer :: FillTriangle (const Uniform *material, const Vertex &v0, const 
             Vertex v = {{x + 0.5f, y + 0.5f, 0}};
             if (TriangleCheck(v0, v1, v2, v, weight))continue;
             Interpolate(v0, v1, v2, v, weight);
-            if (v.pos.z >= depthBuffer[x + y * width]) continue;
+            if (v.pos.z >= (*depthBuffer)[x + y * width]) continue;
             DrawPoint (x, y, fShader (material, v), v.pos.z);
         }
     }
@@ -224,19 +241,19 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
     {
-        frameBuffer[x + y * width] = color; // write frame buffer
-        depthBuffer[x + y * width] = z; // write z buffer
+        (*frameBuffer)[x + y * width] = color; // write frame buffer
+        (*depthBuffer)[x + y * width] = z; // write z buffer
     }
 }
 
 void Renderer :: AddModel(const Model &mod)
 {
-	modelList.push_back(mod);
+	modelList->push_back(mod);
 }
 
 void Renderer :: DrawAllModels()
 {
-    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+    for (std::vector<Model> :: iterator i = modelList->begin();i != modelList->end();i++)
 	{
 		//DrawModel(*i, NULL, NULL);
 	}
@@ -244,7 +261,7 @@ void Renderer :: DrawAllModels()
 
 void Renderer :: DrawAllModelsWithSpecifiedMaterial(const Material &mat)
 {
-	for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
+	for (std::vector<Model> :: iterator i = modelList->begin();i != modelList->end();i++)
 	{
 		DrawModel(*i, mat);
 	}
@@ -256,16 +273,27 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 {
 	int oldW = width;
 	int oldH = height;
-	Matrix4x4 oldView = view;
-	Matrix4x4 oldProj = proj;
-	std::vector<Vector4> oldFrameBuffer = frameBuffer;
-	std::vector<float> oldDepthBuffer = depthBuffer;
+	Matrix4x4 *oldView = view;
+	Matrix4x4 *oldProj = proj;
+	std::vector<Vector4> *oldFrameBuffer = frameBuffer;
+	std::vector<float> *oldDepthBuffer = depthBuffer;
 	
+    std::vector<Vector4> *thisFrameBuffer = new std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
+    std::vector<float> *thisDepthBuffer = new std::vector<float> (w * h, std::numeric_limits<float> :: max ());
+    
+    frameBuffer = thisFrameBuffer;
+    depthBuffer = thisDepthBuffer;
+    
 	width = w;
 	height = h;
-	view = light.rotMat;
-	SetFrustum((float)M_PI_2, w * 1.0 / h, near, far);
-	ShaderLab :: WORLD_SPACE_LIGHT_VP = view * proj;
+    
+	view = &light.rotMat;
+    
+    Matrix4x4 *thisProj = new Matrix4x4(RasTransform :: CreateProjectionMatrix(fov, w * 1.0 / h, near, far));
+	
+    proj = thisProj;
+    
+	ShaderLab :: WORLD_SPACE_LIGHT_VP = (*view) * (*proj);
 	
 	VShader v = &ShaderLab :: VertexShader;
 	FShader f = &ShaderLab :: FragmentDepth;
@@ -278,11 +306,12 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	shadowMap.width = w;
 	shadowMap.height = h;
 	shadowMap.data.resize(w * h);
+	
 	for (int i = 0;i < w;i++)
 	{
 		for (int j = 0;j < h;j++)
 		{
-			float d = frameBuffer[i + j * w].x;
+			float d = (*frameBuffer)[i + j * w].x;
 			if (d == 1)
 				d = far;
 			float value = -(far + near) / (far - near) + (2 * far * near) / (far - near) / d;
@@ -301,4 +330,9 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	
 	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
 	BMPManager::SaveBMP (shadowMap.data, w, h, "results/shadowMap.bmp");
+    
+    delete thisFrameBuffer;
+    delete thisDepthBuffer;
+    delete thisProj;
+	delete depthUni;
 }
