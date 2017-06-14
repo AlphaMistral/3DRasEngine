@@ -50,21 +50,21 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 	ShaderLab :: WORLD_SPACE_LIGHT_COLOR_SPE = light.specularColor;
 }
 
-void Renderer :: DrawModel(const RenderObject &ro, VShader vShader, FShader fShader)
+void Renderer :: DrawModel(const Model &mod, const Material &mat)
 {
-	ShaderLab :: RAS_MATRIX_M = ro.model.worldMat;
+	ShaderLab :: RAS_MATRIX_M = mod.worldMat;
     ShaderLab :: RAS_MATRIX_V = view;
 	ShaderLab :: RAS_MATRIX_P = proj;
-	ShaderLab :: RAS_MATRIX_MV = ro.model.worldMat * view;
+	ShaderLab :: RAS_MATRIX_MV = mod.worldMat * view;
 	ShaderLab :: RAS_MATRIX_MVP = ShaderLab :: RAS_MATRIX_MV * proj;
 	ShaderLab :: RAS_MATRIX_IT_MV = ShaderLab :: RAS_MATRIX_MV.InvertTranspose();
-    for (auto &idx : ro.model.index)
+    for (auto &idx : mod.index)
     {
         Vertex outVertex[3];
         bool badTriangle = false;
         for (int i = 0;i < 3;i++)
         {
-			outVertex[i] = vShader (VertexInput(ro.model.vertex[idx.pos[i]], ro.model.normal[idx.normal[i]], ro.model.uv[idx.uv[i]]));
+			outVertex[i] = mat.vertexShader (VertexInput(mod.vertex[idx.pos[i]], mod.normal[idx.normal[i]], mod.uv[idx.uv[i]]));
             if (outVertex[i].pos.z < 0.0f || outVertex[i].pos.z > 1.0f)
             {
                 badTriangle = true;
@@ -73,7 +73,7 @@ void Renderer :: DrawModel(const RenderObject &ro, VShader vShader, FShader fSha
             NDC2Screen (outVertex[i].pos);
         }
         if (badTriangle || BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos))continue;
-        FillTriangle(ro.material, outVertex[0], outVertex[1], outVertex[2], fShader);
+        FillTriangle(mat.uniform, outVertex[0], outVertex[1], outVertex[2], mat.fragmentShader);
     }
 }
 
@@ -229,24 +229,24 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
     }
 }
 
-void Renderer :: AddModel(const RenderObject &mod)
+void Renderer :: AddModel(const Model &mod)
 {
 	modelList.push_back(mod);
 }
 
 void Renderer :: DrawAllModels()
 {
-    for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
+    for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
 		//DrawModel(*i, NULL, NULL);
 	}
 }
 
-void Renderer :: DrawAllModelsWithSpecifiedShaders(VShader vShader, FShader fShader)
+void Renderer :: DrawAllModelsWithSpecifiedMaterial(const Material &mat)
 {
-	for (std::vector<RenderObject> :: iterator i = modelList.begin();i != modelList.end();i++)
+	for (std::vector<Model> :: iterator i = modelList.begin();i != modelList.end();i++)
 	{
-		DrawModel(*i, vShader, fShader);
+		DrawModel(*i, mat);
 	}
 }
 
@@ -270,7 +270,9 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	VShader v = &ShaderLab :: VertexShader;
 	FShader f = &ShaderLab :: FragmentDepth;
 	
-	DrawAllModelsWithSpecifiedShaders(v, f);
+	Uniform *depthUni = new Uniform;
+	Material depthMateiral = Material(depthUni, v, f);
+	DrawAllModelsWithSpecifiedMaterial(depthMateiral);
 	
 	Texture shadowMap;
 	shadowMap.width = w;
@@ -298,5 +300,5 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	depthBuffer = oldDepthBuffer;
 	
 	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
-	BMPManager::SaveBMP (shadowMap.data, w, h, "123.bmp");
+	BMPManager::SaveBMP (shadowMap.data, w, h, "shadowMap.bmp");
 }

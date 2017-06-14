@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28B73F6C1EF0F83200A791E5 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28B73F6A1EF0F83200A791E5 /* Material.cpp */; };
 		28C97A9C1EE59031006D3C95 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A7F1EE59031006D3C95 /* main.cpp */; };
 		28C97A9D1EE59031006D3C95 /* EulerAngles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A801EE59031006D3C95 /* EulerAngles.cpp */; };
 		28C97A9E1EE59031006D3C95 /* EulerAngles.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 28C97A811EE59031006D3C95 /* EulerAngles.hpp */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		283107F01EDC02FC006746EC /* 3DRasEngine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 3DRasEngine; sourceTree = BUILT_PRODUCTS_DIR; };
 		2877A8B51EDD440E0026AF21 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../src; sourceTree = "<group>"; };
+		28B73F6A1EF0F83200A791E5 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../src/Render/Material.cpp; sourceTree = "<group>"; };
+		28B73F6B1EF0F83200A791E5 /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Material.hpp; path = ../src/Render/Material.hpp; sourceTree = "<group>"; };
 		28C97A7F1EE59031006D3C95 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A801EE59031006D3C95 /* EulerAngles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EulerAngles.cpp; path = ../src/Math/EulerAngles.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		28C97A811EE59031006D3C95 /* EulerAngles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EulerAngles.hpp; path = ../src/Math/EulerAngles.hpp; sourceTree = "<group>"; usesTabs = 1; };
@@ -113,6 +116,8 @@
 				28C97A8E1EE59031006D3C95 /* Model.hpp */,
 				28C97A8F1EE59031006D3C95 /* Renderer.cpp */,
 				28C97A901EE59031006D3C95 /* Renderer.hpp */,
+				28B73F6A1EF0F83200A791E5 /* Material.cpp */,
+				28B73F6B1EF0F83200A791E5 /* Material.hpp */,
 				28C97AC21EE66BEF006D3C95 /* Util.cpp */,
 				28C97AC31EE66BEF006D3C95 /* Util.hpp */,
 				28C97A911EE59031006D3C95 /* ShaderLab.cpp */,
@@ -212,6 +217,7 @@
 				28C97AA11EE59031006D3C95 /* Quaternion.cpp in Sources */,
 				28C97AA31EE59031006D3C95 /* RasMath.hpp in Sources */,
 				28C97AA41EE59031006D3C95 /* RotationMatrix.cpp in Sources */,
+				28B73F6C1EF0F83200A791E5 /* Material.cpp in Sources */,
 				28C97AA61EE59031006D3C95 /* Vector.cpp in Sources */,
 				28C97AA81EE59031006D3C95 /* Mesh.cpp in Sources */,
 				28C97ABB1EE662F7006D3C95 /* RenderObject.cpp in Sources */,
