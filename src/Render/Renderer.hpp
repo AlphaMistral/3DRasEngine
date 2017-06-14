@@ -25,15 +25,16 @@ class Renderer
 public:
     int width, height;
 	float near, far, fov;
-    std::vector <Vector4> frameBuffer;
-    std::vector <float> depthBuffer;
-    std::vector <Model> modelList;
-    Matrix4x4 proj, view, mv, mvp, nmv;
+    std::vector <Vector4> *frameBuffer;
+    std::vector <float> *depthBuffer;
+    std::vector <Model> *modelList;
+    Matrix4x4 *proj, *view, *mv, *mvp, *nmv;
     Light light;
 	ShaderLab shaderLab;
 	
     Renderer (int w, int h);
-    
+	~Renderer ();
+	
     void SetFrustum (float fov, float aspr, float np, float fp);
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
@@ -42,7 +43,7 @@ public:
 	void DrawModel (const Model &, const Uniform *);
 	void DrawAllModels ();
 	void DrawAllModelsWithSpecifiedMaterial (const Material &);
-	void GenerateShadowMap (const int, const int);
+	void GenerateShadowMap (const int, const int, const float, const float, const float);
 	
 	void SetupProperties ();
 	
