@@ -3,7 +3,7 @@
 
 int main ()
 {
-    const int WIDTH = 1024 * 2, HEIGHT = 768 * 2;
+    const int WIDTH = 1024, HEIGHT = 768;
     Renderer renderer (WIDTH, HEIGHT);
     
     renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
@@ -26,7 +26,7 @@ int main ()
 	renderer.AddModel(sphere);
 	renderer.AddModel(bunny);
 	renderer.AddModel(cube);
-	renderer.GenerateShadowMap(1024 * 2, 768 * 2);
+	renderer.GenerateShadowMap(1024, 768);
 	Material cubeMaterial = Material(cubeMat, xxx, fff);
 	Material bunnyMaterial = Material(bunnyMat, xxx, fff);
 	Material sphereMaterial = Material(sphereMat, xxx, fff);
@@ -34,6 +34,6 @@ int main ()
 	renderer.DrawModel (bunny, bunnyMaterial);
 	renderer.DrawModel (sphere, sphereMaterial);
 	//renderer.DrawAllModelsWithSpecifiedShaders(xxx, fff);
-    BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "RenderResult.bmp");
+    BMPManager::SaveBMP (renderer.frameBuffer, WIDTH, HEIGHT, "results/RenderResult.bmp");
     return 0;
 }

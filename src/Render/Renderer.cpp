@@ -300,5 +300,5 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	depthBuffer = oldDepthBuffer;
 	
 	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
-	BMPManager::SaveBMP (shadowMap.data, w, h, "shadowMap.bmp");
+	BMPManager::SaveBMP (shadowMap.data, w, h, "results/shadowMap.bmp");
 }

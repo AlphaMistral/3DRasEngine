@@ -1,7 +1,5 @@
 
-*.bmp
 *.obj
-momo.bmp
 
 # Mac OS X
 *.DS_Store
