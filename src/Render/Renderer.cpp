@@ -306,8 +306,8 @@ void Renderer :: GenerateShadowMap(const int w, const int h, const float fov, co
 	VShader v = &ShaderLab :: VertexShader;
 	FShader f = &ShaderLab :: FragmentDepth;
 	
-	Uniform *depthUni = new Uniform();
-	Material depthMateiral = Material(depthUni, v, f);
+	//Uniform *depthUni = new Uniform();
+	Material depthMateiral = Material(NULL, v, f);
 	DrawAllModelsWithSpecifiedMaterial(depthMateiral);
 	
 	Texture shadowMap;
@@ -344,5 +344,5 @@ void Renderer :: GenerateShadowMap(const int w, const int h, const float fov, co
     delete thisFrameBuffer;
     delete thisDepthBuffer;
     delete thisProj;
-	delete depthUni;
+	//delete depthUni;
 }
