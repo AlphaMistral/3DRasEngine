@@ -271,27 +271,35 @@ void Renderer :: DrawAllModelsWithSpecifiedMaterial(const Material &mat)
 ///To be revised in the later version.
 void Renderer :: GenerateShadowMap(const int w, const int h)
 {
+	///Claim Backup Storage Variables
 	int oldW = width;
 	int oldH = height;
 	Matrix4x4 *oldView = view;
 	Matrix4x4 *oldProj = proj;
 	std::vector<Vector4> *oldFrameBuffer = frameBuffer;
 	std::vector<float> *oldDepthBuffer = depthBuffer;
+	///Claim Backup Storage Variables
 	
+	///Bind to new Buffer
     std::vector<Vector4> *thisFrameBuffer = new std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
     std::vector<float> *thisDepthBuffer = new std::vector<float> (w * h, std::numeric_limits<float> :: max ());
     
     frameBuffer = thisFrameBuffer;
     depthBuffer = thisDepthBuffer;
-    
+    ///Bind to new Buffer
+	
+	///Set Frustum Parameters
 	width = w;
 	height = h;
-    
+	///Set Frustum Parameters
+	
+	///Bind to new Transformation Matrices
 	view = &light.rotMat;
     
     Matrix4x4 *thisProj = new Matrix4x4(RasTransform :: CreateProjectionMatrix(fov, w * 1.0 / h, near, far));
 	
     proj = thisProj;
+	///Bind to new Transformation Matrices
     
 	ShaderLab :: WORLD_SPACE_LIGHT_VP = (*view) * (*proj);
 	
@@ -321,12 +329,14 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 		}
 	}
 	
+	///Restore the Backup Variables
 	width = oldW;
 	height = oldH;
 	view = oldView;
 	proj = oldProj;
 	frameBuffer = oldFrameBuffer;
 	depthBuffer = oldDepthBuffer;
+	///Restore the Backup Variables
 	
 	ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP = shadowMap;
 	BMPManager::SaveBMP (shadowMap.data, w, h, "results/shadowMap.bmp");
