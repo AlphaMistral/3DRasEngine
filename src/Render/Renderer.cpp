@@ -21,9 +21,6 @@ Renderer :: ~Renderer ()
 {
 	delete proj;
 	delete view;
-	delete mv;
-	delete mvp;
-	delete nmv;
 	delete modelList;
 	delete frameBuffer;
 	delete depthBuffer;
