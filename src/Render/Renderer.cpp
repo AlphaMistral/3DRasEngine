@@ -10,6 +10,8 @@
 
 Renderer :: Renderer (int w, int h)
 {
+    view = NULL;
+    proj = NULL;
     width = w;
     height = h;
     modelList = new std::vector<Model> ();
