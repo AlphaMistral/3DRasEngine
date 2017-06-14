@@ -11,6 +11,14 @@
 * make
 * ./RasEngine
 
-### More features would be added into this rendering engine in the future. 
+### About Shadow.
+* The Shadow Function in 3DRasEngine now supports only ONE SINGLE POINT LIGHT. 
+* The implementation of Shadow is achieved by ShadowMapping. 
+* However currently the GenerateShadowMap in the Renderer Class is extremely performance-sensitive and meanwhile it breaks the design of the architecture of the whole engine. Hence it needs to be revised. Anyway it is up and running and please feel free to give it a shot :)
+
+### Trouble Shooting & Contact
+* If you detect any unexpected output or error, or have some questions regarding any part of the engine, please feel free to contact me at:
+* WeChat: yujingping95
+* E-mail: Mistral@weymire.com 
 
 
