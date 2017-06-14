@@ -28,7 +28,7 @@ public:
     std::vector <Vector4> *frameBuffer;
     std::vector <float> *depthBuffer;
     std::vector <Model> *modelList;
-    Matrix4x4 *proj, *view, *mv, *mvp, *nmv;
+    Matrix4x4 *proj, *view;
     Light light;
 	ShaderLab shaderLab;
 	

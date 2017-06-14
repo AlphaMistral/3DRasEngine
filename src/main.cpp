@@ -8,7 +8,7 @@ int main ()
 	
 	renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
 	renderer.SetCamera (Vector4( 0.0f, 3.0f, 5.0f ), Vector4( 0.0f, 0.0f, 0.0f ));
-	renderer.SetLight (Vector4( -2.0f, 6.0f, 6.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
+	renderer.SetLight (Vector4( -4.0f, 12.0f, 12.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
 	Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
 	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
 	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
@@ -16,7 +16,7 @@ int main ()
 	Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
 	VShader xxx = &ShaderLab::VertexShader;
 	FShader fff = &ShaderLab::FragmentBlinnPhong;
-	Model sphere ("res/sphere", Vector4( -2.0f, 3.5f, 4.5f ));
+	Model sphere ("res/sphere", Vector4( -2.0f, 3.2f, 4.2f ));
 	sphere.uniform = sphereMat;
 	Model bunny ("res/bunny", Vector4( 0.0f, 0.0f, 0.0f ));
 	bunny.uniform = bunnyMat;
