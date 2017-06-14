@@ -269,7 +269,7 @@ void Renderer :: DrawAllModelsWithSpecifiedMaterial(const Material &mat)
 
 ///This function now is extremely extremely slow!!!!!!!!!!!
 ///To be revised in the later version.
-void Renderer :: GenerateShadowMap(const int w, const int h)
+void Renderer :: GenerateShadowMap(const int w, const int h, const float fov, const float np, const float fp)
 {
 	///Claim Backup Storage Variables
 	int oldW = width;
@@ -296,7 +296,7 @@ void Renderer :: GenerateShadowMap(const int w, const int h)
 	///Bind to new Transformation Matrices
 	view = &light.rotMat;
     
-    Matrix4x4 *thisProj = new Matrix4x4(RasTransform :: CreateProjectionMatrix(fov, w * 1.0 / h, near, far));
+    Matrix4x4 *thisProj = new Matrix4x4(RasTransform :: CreateProjectionMatrix(fov, w * 1.0 / h, np, fp));
 	
     proj = thisProj;
 	///Bind to new Transformation Matrices

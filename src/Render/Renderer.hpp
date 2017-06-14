@@ -43,7 +43,7 @@ public:
 	void DrawModel (const Model &, const Uniform *);
 	void DrawAllModels ();
 	void DrawAllModelsWithSpecifiedMaterial (const Material &);
-	void GenerateShadowMap (const int, const int);
+	void GenerateShadowMap (const int, const int, const float, const float, const float);
 	
 	void SetupProperties ();
 	
