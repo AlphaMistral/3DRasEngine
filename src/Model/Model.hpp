@@ -26,11 +26,10 @@
 class Model : public Mesh
 {
 public:
-    //Material material;
     Matrix4x4 worldMat;
 	Uniform *uniform;
 	Model () {}
-    Model (std::string name, const Vector4 &pos);
+    Model (std::string name, const Vector4 &pos = Vector4(0.0f, 0.0f, 0.0f, 1.0f));
     void LoadOBJ (std::string name);
 };
 

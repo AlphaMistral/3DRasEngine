@@ -31,9 +31,7 @@ bool BMPManager :: LoadBMP (Texture &texture, std::string fileName)
     if (!is) return false;
     unsigned char buf[54];
     is.read ((char *)buf, sizeof (buf));
-    // in bmp header, height could be negtive
     texture.width = *(int *)&buf[18], texture.height = abs (*(int *)&buf[22]);
-    // smax/tmax is use for texture filtering
     texture.smax = texture.width - 1.5f, texture.tmax = texture.height - 1.5f;
     int bytes = buf[28] / 8, count = texture.width * texture.height * bytes;
     unsigned char *tmp = new unsigned char[count];
