@@ -128,7 +128,7 @@ void Renderer :: FillTriangle (const Uniform *material, const Vertex &v0, const 
 
 bool Renderer :: TriangleCheck (const Vertex &v0, const Vertex &v1, const Vertex &v2, Vertex &v, Vector4 &w)
 {
-    w.x = EdgeFunc (v1.pos, v2.pos, v.pos) * v0.pos.w / w.w; // pos.w == 1 / pos.z . we did that in Ndc2Screen()
+    w.x = EdgeFunc (v1.pos, v2.pos, v.pos) * v0.pos.w / w.w;
     w.y = EdgeFunc (v2.pos, v0.pos, v.pos) * v1.pos.w / w.w;
     w.z = EdgeFunc (v0.pos, v1.pos, v.pos) * v2.pos.w / w.w;
     return (w.x < 0 || w.y < 0 || w.z < 0);
@@ -240,22 +240,14 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
     {
-        (*frameBuffer)[x + y * width] = color; // write frame buffer
-        (*depthBuffer)[x + y * width] = z; // write z buffer
+        (*frameBuffer)[x + y * width] = color;
+        (*depthBuffer)[x + y * width] = z;
     }
 }
 
 void Renderer :: AddModel(const Model &mod)
 {
 	modelList->push_back(mod);
-}
-
-void Renderer :: DrawAllModels()
-{
-    for (std::vector<Model> :: iterator i = modelList->begin();i != modelList->end();i++)
-	{
-		//DrawModel(*i, NULL, NULL);
-	}
 }
 
 void Renderer :: DrawAllModelsWithSpecifiedMaterial(const Material &mat)
@@ -305,7 +297,6 @@ void Renderer :: GenerateShadowMap(const int w, const int h, const float fov, co
 	VShader v = &ShaderLab :: VertexShader;
 	FShader f = &ShaderLab :: FragmentDepth;
 	
-	//Uniform *depthUni = new Uniform();
 	Material depthMateiral = Material(NULL, v, f);
 	DrawAllModelsWithSpecifiedMaterial(depthMateiral);
 	
@@ -343,5 +334,4 @@ void Renderer :: GenerateShadowMap(const int w, const int h, const float fov, co
     delete thisFrameBuffer;
     delete thisDepthBuffer;
     delete thisProj;
-	//delete depthUni;
 }

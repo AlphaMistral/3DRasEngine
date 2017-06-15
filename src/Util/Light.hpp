@@ -43,20 +43,20 @@ public:
 class DirectionalLight : public LightBase
 {
 public:
-    virtual void GenerateShadowMap (); //ortho
+    virtual void GenerateShadowMap ();
 };
 
 class PointLight : public LightBase
 {
 public:
-    virtual void GenerateShadowMap (); //cubeMap
+    virtual void GenerateShadowMap ();
 };
 
 class SpotLight : public LightBase
 {
 public:
     float angle; // [0, pi];
-    virtual void GenerateShadowMap (); //Pers
+    virtual void GenerateShadowMap ();
 };
 
 #endif /* Light_hpp */

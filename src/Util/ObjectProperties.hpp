@@ -20,7 +20,6 @@
 struct Vertex { Vector4 pos, uv, normal, viewPos, color, worldPos; };
 struct Index { int pos[3], uv[3], normal[3]; };
 struct Texture { int width, height; float smax, tmax; std::vector<Vector4> data; };
-//struct Material { float ka, kd, ks; Texture texture; };
 struct Light { Vector4 pos, viewPos, ambientColor, diffuseColor, specularColor; Matrix4x4 rotMat;};
 
 #endif /* ObjectProperties_hpp */

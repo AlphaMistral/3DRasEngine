@@ -38,10 +38,8 @@ public:
     void SetFrustum (float fov, float aspr, float np, float fp);
     void SetCamera (const Vector4 &look, const Vector4 &at);
     void SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector4 &diff, const Vector4 &spec);
-    //void DrawModel (Model &model, bool drawTex = true, bool drawWireFrame = false);
 	void DrawModel (const Model &, const Material &);
 	void DrawModel (const Model &, const Uniform *);
-	void DrawAllModels ();
 	void DrawAllModelsWithSpecifiedMaterial (const Material &);
 	void GenerateShadowMap (const int, const int, const float, const float, const float);
 	
