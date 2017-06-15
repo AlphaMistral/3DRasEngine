@@ -1,5 +1,7 @@
 
 *.obj
+*.in
+*.am
 
 # Mac OS X
 *.DS_Store
