@@ -32,7 +32,7 @@ int main ()
 	renderer.AddModel(sphere);
 	renderer.AddModel(bunny);
 	renderer.AddModel(cube);
-	///Only the models above cast shadow ... 
+	///Only the models above cast shadow ...
 	renderer.GenerateShadowMap(1024, 768, (float)M_PI_2, 0.1f, 1000.0f);
 	Material cubeMaterial = Material(cubeMat, xxx, fff);
 	Material bunnyMaterial = Material(bunnyMat, xxx, fff);
