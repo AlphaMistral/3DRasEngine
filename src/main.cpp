@@ -8,7 +8,7 @@ int main ()
 	
 	renderer.SetFrustum ((float)M_PI_2, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
 	renderer.SetCamera (Vector4( 0.0f, 3.0f, 5.0f ), Vector4( 0.0f, 0.0f, 0.0f ));
-	renderer.SetLight (Vector4( -4.0f, 12.0f, 12.0f ), Vector4( 0.5f, 0.0f, 0.0f, 0 ), Vector4( 0.8f, 0.8f, 0.8f, 0 ), Vector4( 0.5f, 0.5f, 0.5f, 0 ));
+	renderer.SetLight (Vector4( -4.0f, 12.0f, 12.0f ), Vector4( 0.5f, 0.0f, 0.0f, 1 ), Vector4( 0.8f, 0.8f, 0.8f, 1 ), Vector4( 0.5f, 0.5f, 0.5f, 1 ));
 	Vector3 eulerAngles = Vector3(0, acos(-1) / 10, 0);
 	UniformBlinnPhong *bunnyMat = new UniformBlinnPhong(0.1f, 0.8f, 0.7f, "res/bunny.bmp");
 	UniformBlinnPhong *sphereMat = new UniformBlinnPhong(0.1f, 1.0f, 0.5f, "res/sphere.bmp");
@@ -30,8 +30,8 @@ int main ()
 	Material cubeMaterial = Material(cubeMat, xxx, fff);
 	Material bunnyMaterial = Material(bunnyMat, xxx, fff);
 	Material sphereMaterial = Material(sphereMat, xxx, fff);
-	renderer.DrawModel (cube, cubeMaterial);
 	renderer.DrawModel (bunny, bunnyMaterial);
+	renderer.DrawModel (cube, cubeMaterial);
 	renderer.DrawModel (sphere, sphereMaterial);
 	BMPManager::SaveBMP (*renderer.frameBuffer, WIDTH, HEIGHT, "results/RenderResult.bmp");
 	delete bunnyMat;

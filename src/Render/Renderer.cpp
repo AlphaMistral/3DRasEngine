@@ -15,7 +15,7 @@ Renderer :: Renderer (int w, int h)
     width = w;
     height = h;
     modelList = new std::vector<Model> ();
-    frameBuffer = new std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 0});
+    frameBuffer = new std::vector<Vector4> (w * h, {1.0f, 1.0f, 1.0f, 1.0f});
     depthBuffer = new std::vector<float> (w * h, std::numeric_limits<float> :: max ());
 }
 
@@ -240,7 +240,10 @@ void Renderer :: DrawPoint (int x, int y, const Vector4 &color, float z)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
     {
-        (*frameBuffer)[x + y * width] = color;
+		Vector4 dstColor = (*frameBuffer)[x + y * width];
+		Vector4 srcColor = color * color.w + dstColor * (1 - color.w);
+		srcColor.w = 1;
+        (*frameBuffer)[x + y * width] = srcColor;
         (*depthBuffer)[x + y * width] = z;
     }
 }
