@@ -5,6 +5,12 @@
 * In order to emphasize the process of how a rendering engine works, 3DRasEngine is not optimized. 
 * Most of the ideas behind the engine could be found on https://www.scratchapixel.com
 
+### Features
+* Just a simple rendering engine. No BS. 
+* Supports Shadow and Alpha Blending. 
+
+![Sample Image](Sample.png)
+
 ### Installation and Setup
 * git clone https://github.com/AlphaMistral/3DRasEngine.git
 * cd 3DRasEngine
