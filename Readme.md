@@ -9,7 +9,7 @@
 * Just a simple rendering engine. No BS. 
 * Supports Shadow and Alpha Blending. 
 
-![Sample Image](Sample.png)
+![Sample Image](Sample.jpg)
 
 ### Installation and Setup
 * git clone https://github.com/AlphaMistral/3DRasEngine.git
