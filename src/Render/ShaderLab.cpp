@@ -79,6 +79,15 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
     return color;
 }
 
+Vector4 ShaderLab :: FragmentTransparentShield(const Uniform *uni, const Vertex &v)
+{
+	const UniformTransparentShield *uniform = static_cast<const UniformTransparentShield*>(uni);
+	Vector4 result = uniform->color;
+	Vector4 viewDiretion = (-v.viewPos).Normalize();
+	result.w = 1 - std::max (0.0f, viewDiretion.Dot(v.normal));
+	return result;
+}
+
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)
 {
     Vector4 color = { 0.87f, 0.87f, 0.87f, 1 };
