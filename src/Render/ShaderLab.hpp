@@ -45,7 +45,10 @@ public:
     static Vector4 FragmentDepth(const Uniform*, const Vertex&);
     static Vector4 FragmentLambertian(const Uniform*, const Vertex&);
     static Vector4 FragmentBlinnPhong(const Uniform*, const Vertex&);
-    
+	static Vector4 FragmentTransparentShield(const Uniform*, const Vertex&);
+	
+	static float DEPTH_OFFSET;
+	
     static inline float Saturate (float n);
     
     static inline Vector4 TextureLookup (const Texture &texture, float s, float t);

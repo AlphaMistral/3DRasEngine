@@ -24,6 +24,8 @@ Matrix4x4 ShaderLab :: WORLD_SPACE_LIGHT_V;
 Matrix4x4 ShaderLab :: WORLD_SPACE_LIGHT_VP;
 Texture ShaderLab :: WORLD_SPACE_LIGHT_SHADOWMAP;
 
+float ShaderLab :: DEPTH_OFFSET = 0.0001f;
+
 static Vector4 PROJECTION_PARAMS;
 
 Vertex ShaderLab :: VertexShader(const VertexInput &inVertex)
@@ -63,7 +65,7 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
 	projY = v.worldPos.y * 0.5 + 0.5;
 	projZ = v.worldPos.z * 0.5 + 0.5;
 	float result = TextureLookup(WORLD_SPACE_LIGHT_SHADOWMAP, projX, projY).x;
-	if (result + 0.0001 > projZ)
+	if (result + DEPTH_OFFSET > projZ)
 		shadowed = 1;
     if (lambertian > 1)
     {
@@ -72,17 +74,29 @@ Vector4 ShaderLab :: FragmentBlinnPhong(const Uniform *uni, const Vertex &v)
         auto angle = std::max (0.0f, half.Dot (v.normal));
         specular = pow (angle, 16.0f);
     }
-    return (TextureLookup (uniform->texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * uniform->ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * uniform->kd * shadowed) + WORLD_SPACE_LIGHT_COLOR_SPE * shadowed * specular * uniform->ks);
+	Vector4 color = (TextureLookup (uniform->texture, v.uv.x, v.uv.y) * (WORLD_SPACE_LIGHT_COLOR_AMB * uniform->ka + WORLD_SPACE_LIGHT_COLOR_DIF * lambertian * uniform->kd * shadowed) + WORLD_SPACE_LIGHT_COLOR_SPE * shadowed * specular * uniform->ks);
+	color.w = 1;
+    return color;
+}
+
+Vector4 ShaderLab :: FragmentTransparentShield(const Uniform *uni, const Vertex &v)
+{
+	const UniformTransparentShield *uniform = static_cast<const UniformTransparentShield*>(uni);
+	Vector4 result = uniform->color;
+	Vector4 viewDiretion = (-v.viewPos).Normalize();
+	result.w = 1 - std::max (0.0f, viewDiretion.Dot(v.normal));
+	return result;
 }
 
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)
 {
-    Vector4 color = { 0.87f, 0.87f, 0.87f, 0 };
+    Vector4 color = { 0.87f, 0.87f, 0.87f, 1 };
     if (!texture.data.empty ())
     {
         s = Saturate (s), t = Saturate (t);
         color = BilinearFiltering (texture, s * (texture.width - 1), t * (texture.height - 1));
     }
+	color.w = 1;
     return color;
 }
 

@@ -55,4 +55,14 @@ public:
     }
 };
 
+class UniformTransparentShield : public Uniform
+{
+public:
+	Vector4 color;
+	UniformTransparentShield (const Vector4 &c)
+	{
+		color = c;
+	}
+};
+
 #endif /* ShaderProperty_hpp */
