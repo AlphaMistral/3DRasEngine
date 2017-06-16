@@ -17,7 +17,7 @@ int main ()
 	UniformTransparentShield *largeMat = new UniformTransparentShield(Vector4(1.0f / 256 * 199, 1.0f / 256 * 159, 1.0f / 256 * 150));
 	Quaternion q = Quaternion :: GetQuaternionFromEulerAngles(eulerAngles);
 	VShader xxx = &ShaderLab::VertexShader;
-	FShader fff = &ShaderLab::FragmentBlinnPhong;
+    FShader fff = &ShaderLab::FragmentBlinnPhong;
 	FShader ttt = &ShaderLab::FragmentTransparentShield;
 	Model sphere ("res/sphere", Vector4( -2.0f, 3.2f, 4.2f ));
 	sphere.uniform = sphereMat;
@@ -44,7 +44,7 @@ int main ()
 	renderer.DrawModel (cube, cubeMaterial);
 	renderer.DrawModel (sphere, sphereMaterial);
 	renderer.DrawModel (cubeTrans, transMaterial);
-	renderer.DrawModel(cubeLargeTrans, largeMaterial);
+	renderer.DrawModel (cubeLargeTrans, largeMaterial);
 	BMPManager::SaveBMP (*renderer.frameBuffer, WIDTH, HEIGHT, "results/RenderResult.bmp");
 	delete bunnyMat;
 	delete sphereMat;

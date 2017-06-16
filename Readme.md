@@ -1,5 +1,7 @@
 ## 3DRasEngine
 
+![Sample Image](Sample.jpg)
+
 ### Introduction
 * 3DRasEngine is an offline rendering engine developed based on rasterization. 
 * In order to emphasize the process of how a rendering engine works, 3DRasEngine is not optimized. 
@@ -8,8 +10,6 @@
 ### Features
 * Just a simple rendering engine. No BS. 
 * Supports Shadow and Alpha Blending. 
-
-![Sample Image](Sample.jpg)
 
 ### Installation and Setup
 * git clone https://github.com/AlphaMistral/3DRasEngine.git

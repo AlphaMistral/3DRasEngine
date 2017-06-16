@@ -40,13 +40,16 @@ public:
 	static Texture WORLD_SPACE_LIGHT_SHADOWMAP;
     
     static Vertex VertexShader(const VertexInput&);
+    static Vertex VertexOutline(const VertexInput&);
     static Vertex VertexShaderSimple(const VertexInput&);
     
     static Vector4 FragmentDepth(const Uniform*, const Vertex&);
     static Vector4 FragmentLambertian(const Uniform*, const Vertex&);
     static Vector4 FragmentBlinnPhong(const Uniform*, const Vertex&);
 	static Vector4 FragmentTransparentShield(const Uniform*, const Vertex&);
-	
+    static Vector4 FragmentOutline(const Uniform*, const Vertex&);
+    //static Vector4 FragmentCartoon(const Uniform*, const Vertex&);
+    
 	static float DEPTH_OFFSET;
 	
     static inline float Saturate (float n);
