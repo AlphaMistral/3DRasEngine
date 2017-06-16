@@ -105,6 +105,14 @@ Vector4 ShaderLab :: FragmentOutline(const Uniform *uni, const Vertex &v)
     return uniform->outlineColor;
 }
 
+Vector4 ShaderLab :: FragmentCartoon(const Uniform *uni, const Vertex &v)
+{
+    Vector4 result;
+    
+    
+    return result;
+}
+
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)
 {
     Vector4 color = { 0.87f, 0.87f, 0.87f, 1 };

@@ -33,9 +33,17 @@ struct VertexInput
     }
 };
 
+enum CullingOption
+{
+    Back,
+    Front,
+    Off
+};
+
 class Uniform
 {
 public:
+    CullingOption culling;
     virtual ~Uniform () {}
 };
 
@@ -48,6 +56,7 @@ public:
     Texture texture;
     UniformBlinnPhong (float a, float d, float s, std::string fileName)
     {
+        culling = CullingOption :: Back;
         ka = a;
         kd = d;
         ks = s;
@@ -61,6 +70,7 @@ public:
 	Vector4 color;
 	UniformTransparentShield (const Vector4 &c)
 	{
+        culling = CullingOption :: Back;
 		color = c;
 	}
 };
@@ -71,7 +81,22 @@ public:
     Vector4 outlineColor;
     UniformOutline (const Vector4 &c)
     {
+        culling = CullingOption :: Back;
         outlineColor = c;
+    }
+};
+
+class UniformToon : public Uniform
+{
+public:
+    float shininess;
+    Vector4 diffuseSegment;
+    float specularSegment;
+    UniformToon (const float s, const float ss, const Vector4 &d)
+    {
+        shininess = s;
+        specularSegment = ss;
+        diffuseSegment = d;
     }
 };
 

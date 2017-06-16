@@ -48,7 +48,7 @@ public:
     static Vector4 FragmentBlinnPhong(const Uniform*, const Vertex&);
 	static Vector4 FragmentTransparentShield(const Uniform*, const Vertex&);
     static Vector4 FragmentOutline(const Uniform*, const Vertex&);
-    //static Vector4 FragmentCartoon(const Uniform*, const Vertex&);
+    static Vector4 FragmentCartoon(const Uniform*, const Vertex&);
     
 	static float DEPTH_OFFSET;
 	
