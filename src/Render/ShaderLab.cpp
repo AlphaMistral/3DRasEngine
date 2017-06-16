@@ -39,6 +39,17 @@ Vertex ShaderLab :: VertexShader(const VertexInput &inVertex)
     return outVertex;
 }
 
+Vertex ShaderLab :: VertexOutline(const VertexInput &inVertex)
+{
+    Vertex outVertex;
+    outVertex.pos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MVP);
+    outVertex.normal = RasTransform :: TransformDir(inVertex.normal, RAS_MATRIX_IT_MV);
+    outVertex.normal.z = -0.5f;
+    outVertex.pos = outVertex.pos + outVertex.normal * 0.01;
+    outVertex.viewPos = RasTransform :: TransformPoint(inVertex.pos, RAS_MATRIX_MV);
+    return outVertex;
+}
+
 Vertex ShaderLab :: VertexShaderSimple(const VertexInput &inVertex)
 {
 	Vertex outVertex;
@@ -86,6 +97,12 @@ Vector4 ShaderLab :: FragmentTransparentShield(const Uniform *uni, const Vertex 
 	Vector4 viewDiretion = (-v.viewPos).Normalize();
 	result.w = 1 - std::max (0.0f, viewDiretion.Dot(v.normal));
 	return result;
+}
+
+Vector4 ShaderLab :: FragmentOutline(const Uniform *uni, const Vertex &v)
+{
+    const UniformOutline *uniform = static_cast<const UniformOutline*>(uni);
+    return uniform->outlineColor;
 }
 
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)

@@ -65,4 +65,14 @@ public:
 	}
 };
 
+class UniformOutline : public Uniform
+{
+public:
+    Vector4 outlineColor;
+    UniformOutline (const Vector4 &c)
+    {
+        outlineColor = c;
+    }
+};
+
 #endif /* ShaderProperty_hpp */
