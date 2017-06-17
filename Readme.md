@@ -12,7 +12,7 @@
 * Supports Shadow and Alpha Blending. 
 
 ### Installation and Setup
-```shell
+```sh
 git clone https://github.com/AlphaMistral/3DRasEngine.git
 cd 3DRasEngine
 make
