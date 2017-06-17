@@ -81,7 +81,7 @@ public:
     Vector4 outlineColor;
     UniformOutline (const Vector4 &c)
     {
-        culling = CullingOption :: Back;
+        culling = CullingOption :: Front;
         outlineColor = c;
     }
 };
@@ -94,6 +94,7 @@ public:
     float specularSegment;
     UniformToon (const float s, const float ss, const Vector4 &d)
     {
+        culling = CullingOption :: Back;
         shininess = s;
         specularSegment = ss;
         diffuseSegment = d;
