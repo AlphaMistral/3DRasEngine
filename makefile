@@ -1,7 +1,7 @@
 INCLUDE = -I include/Math -I include/Render -I include/Util -I include/Model
 
 RasEngine : Math.a Render.a Model.a Util.a src/main.cpp
-	g++ -o RasEngine $(INCLUDE) Math.a Render.a Model.a Util.a src/main.cpp --std=c++11 -O2 -Wall
+	g++ -o RasEngine $(INCLUDE) src/main.cpp Math.a Render.a Model.a Util.a --std=c++11 -O2 -Wall
 
 Math.a : src/Math/EulerAngles.cpp src/Math/Matrix.cpp src/Math/Quaternion.cpp src/Math/RotationMatrix.cpp src/Math/Vector.cpp src/Math/RasMath.cpp
 	g++ -c $(INCLUDE) src/Math/EulerAngles.cpp src/Math/Matrix.cpp src/Math/Quaternion.cpp src/Math/RotationMatrix.cpp src/Math/Vector.cpp src/Math/RasTransform.cpp src/Math/RasMath.cpp --std=c++11 -O2 -Wall
