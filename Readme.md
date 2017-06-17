@@ -12,10 +12,14 @@
 * Supports Shadow and Alpha Blending. 
 
 ### Installation and Setup
-* git clone https://github.com/AlphaMistral/3DRasEngine.git
-* cd 3DRasEngine
-* make
-* ./RasEngine
+```
+git clone https://github.com/AlphaMistral/3DRasEngine.git
+cd 3DRasEngine
+make
+make clean
+./RasEngine
+```
+* After executing the above commands, the rendered results are stored at results/. 
 * However currently the "makefile" in the RasEngine is ... as you can see, not created in a good way. You are more than welcomed to use "automake" yourself. This is to be revised in the future. 
 
 ### About Shadow.
