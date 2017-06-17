@@ -56,8 +56,6 @@ void Renderer :: SetLight (const Vector4 &pos, const Vector4 &ambi, const Vector
 	
 	rotMat = RasTransform :: CreateViewMatrix(light.pos, Vector4(0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f));
 	
-	light.rotMat = RasTransform :: CreateTranslationMatrix(Vector3(pos.x, pos.y, pos.z)) * rotMat;
-	
 	light.rotMat = rotMat;
 
 	ShaderLab :: WORLD_SPACE_LIGHT_POS = light.pos;
@@ -89,6 +87,16 @@ void Renderer :: DrawModel(const Model &mod, const Material &mat)
             NDC2Screen (outVertex[i].pos);
         }
         if (badTriangle || BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos))continue;
+        CullingOption culling;
+        if (mat.uniform == NULL)
+            culling = CullingOption :: Back;
+        else culling = mat.uniform->culling;
+        if (culling != CullingOption :: Off)
+        {
+            bool check = BackFaceCulling(outVertex[0].viewPos, outVertex[1].viewPos, outVertex[2].viewPos);
+            if (culling == CullingOption :: Back && check)continue;
+            else if (culling == CullingOption :: Front && !check)continue;
+        }
         FillTriangle(mat.uniform, outVertex[0], outVertex[1], outVertex[2], mat.fragmentShader);
     }
 }

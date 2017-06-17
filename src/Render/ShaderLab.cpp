@@ -105,6 +105,21 @@ Vector4 ShaderLab :: FragmentOutline(const Uniform *uni, const Vertex &v)
     return uniform->outlineColor;
 }
 
+Vector4 ShaderLab :: FragmentCartoon(const Uniform *uni, const Vertex &v)
+{
+    const UniformToon *uniform = static_cast<const UniformToon*>(uni);
+    Vector4 result;
+    auto lightView = RasTransform :: TransformPoint(WORLD_SPACE_LIGHT_POS, RAS_MATRIX_V);
+    auto ldir = (lightView - v.viewPos).Normalize ();
+    auto viewDir = (-v.viewPos).Normalize ();
+    auto half = (ldir + viewDir).Normalize ();
+    float diff = v.normal.Dot(ldir);
+    diff = diff * 0.5 + 0.5;
+    float spec = std::max((double)0, (double)v.normal.Dot(half));
+    spec = pow(spec, uniform->shininess);
+    return result;
+}
+
 inline Vector4 ShaderLab :: TextureLookup (const Texture &texture, float s, float t)
 {
     Vector4 color = { 0.87f, 0.87f, 0.87f, 1 };
